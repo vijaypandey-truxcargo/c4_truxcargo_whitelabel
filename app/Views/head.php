@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="<?= base_url('assets/images/favicon.png');?>">
     
-    <?= link_tag('assets/vendor/flatpickr/dist/flatpickr.min.css') ?>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
     <?= link_tag('assets/css/qompac-ui.minf700.css?v=1.0.1') ?>
     <?= link_tag('assets/css/custom.minf700.css?v=1.0.1') ?>
     <?= link_tag('assets/css/customizer.minf700.css?v=1.0.1') ?>

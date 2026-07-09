@@ -13,6 +13,9 @@ class Login extends BaseController
     protected $supportModel;
     protected $userModel;
     protected $db;
+    protected string $loginPage = '/login';
+    protected string $redirectAfterLogin = '/dashboard';
+    protected string $redirectAfterLogout = '/login';
 
     public function __construct()
     {
@@ -25,7 +28,7 @@ class Login extends BaseController
     public function index()
     {
         if (session()->get('login_id')) {
-            return redirect()->to('/dashboard');
+            return redirect()->to($this->redirectAfterLogin);
         }
 
         $data = [
@@ -103,7 +106,7 @@ class Login extends BaseController
                     'Your account is currently open on another device. Continue logging in here? The previous session will be signed out automatically.'
                 );
 
-                return redirect()->to('/login');
+                return redirect()->to($this->loginPage);
             }
 
             $token = md5(uniqid());
@@ -127,13 +130,25 @@ class Login extends BaseController
 
             session()->remove('new');
 
-            return redirect()->to('/dashboard');
+            return redirect()->to($this->redirectAfterLogin);
 
         }
 
         session()->setFlashdata('error', 'Invalid Username/Password');
         session()->setFlashdata('error_class', 'alert-danger');
 
-        return redirect()->to('/login');
+        return redirect()->to($this->loginPage);
+    }
+
+    public function auth()
+    {
+        return $this->insert();
+    }
+
+    public function logout()
+    {
+        session()->destroy();
+
+        return redirect()->to($this->redirectAfterLogout);
     }
 }

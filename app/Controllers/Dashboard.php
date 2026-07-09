@@ -15,6 +15,7 @@ class Dashboard extends BaseController
     protected $plan;
     protected $wconfig;
     protected $current_url;
+    protected string $loginRedirect = '/login';
 
     public function __construct()
     {
@@ -24,7 +25,7 @@ class Dashboard extends BaseController
 
         // Login Check
         if (!session()->get('login_id')) {
-            redirect()->to('/login')->send();
+            redirect()->to($this->loginRedirect)->send();
             exit;
         }
 
@@ -58,7 +59,7 @@ class Dashboard extends BaseController
 
         // Login Check
         if (! $session->has('login_id')) {
-            return redirect()->to('/login');
+            return redirect()->to($this->loginRedirect);
         }
 
         /*

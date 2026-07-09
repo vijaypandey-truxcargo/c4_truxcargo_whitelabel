@@ -28,6 +28,20 @@ to your `app` folder. The affected files can be copied or merged from
 Copy `env` to `.env` and tailor for your app, specifically the baseURL
 and any database settings.
 
+If your XAMPP install is still on PHP 7.4, use your local PHP 8.2+ CLI instead of Apache:
+
+```bash
+composer install
+composer serve
+```
+
+Then open `http://127.0.0.1:8080`.
+
+If you prefer Apache, it must be running PHP 8.2+ and its document root must point to `public/`, and you will need to update `app.baseURL` accordingly.
+
+This workspace's local `.env` is set for `composer serve` on `127.0.0.1:8080`.
+The database connection is XAMPP MariaDB on `127.0.0.1:3307` using the `truxcargoco_white` database and `root`/`root` credentials.
+
 ## Important Change with index.php
 
 `index.php` is no longer in the root of the project! It has been moved inside the *public* folder,

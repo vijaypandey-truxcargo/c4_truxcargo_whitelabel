@@ -125,10 +125,10 @@
  </footer>
 </main> 
 <script src="<?= base_url('assets/js/core/libs.min.js')?>"></script>
-<script src="<?= base_url('assets/vendor/flatpickr/dist/flatpickr.min.js')?>"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
 <script src="<?= base_url('assets/js/plugins/flatpickr.js')?>" defer></script>
 <script src="<?= base_url('assets/js/plugins/select2.js')?>" defer></script> 
-<script src="<?= base_url('assets/vendor/lodash/lodash.min.js')?>"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 <script src="<?= base_url('assets/js/iqonic-script/utility.min.js')?>"></script>
 <script src="<?= base_url('assets/js/iqonic-script/setting.min.js')?>"></script>
 <script src="<?= base_url('assets/js/setting-init.js')?>"></script>
