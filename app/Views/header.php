@@ -40,7 +40,7 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                     <li> <a class="dropdown-item" href="<?= base_url('dashboard/logout');?>"><i class="fa fa-power-off  text-primary"></i> Logout</a></li>
+                                     <li> <a class="dropdown-item" href="<?= base_url('logout');?>"><i class="fa fa-power-off  text-primary"></i> Logout</a></li>
                                 </ul>
                             </li>
                         </div>
@@ -194,7 +194,7 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li> <a class="dropdown-item" href="<?= base_url('dashboard/logout');?>"><i class="fa fa-power-off  text-primary"></i>Logout</a></li>
+                                    <li> <a class="dropdown-item" href="<?= base_url('logout');?>"><i class="fa fa-power-off  text-primary"></i>Logout</a></li>
                                 </ul>
                             </li>
                         </ul>

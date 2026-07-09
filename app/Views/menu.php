@@ -781,6 +781,19 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('logout');?>">
+                            <i class="icon" data-bs-toggle="tooltip" title="Logout" data-bs-placement="right">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <path d="M16 17V15H9V13H16V11L20 14L16 17Z" fill="currentColor"/>
+                                    <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H14C15.1 22 16 21.1 16 20V17H14V20H6V4H14V7H16V4C16 2.9 15.1 2 14 2Z" fill="currentColor"/>
+                                </svg>
+                            </i>
+                            <span class="item-name"> Logout</span>
+                        </a>
+                    </li>
+
                      <li>
                         <hr class="hr-horizontal">
                     </li>
