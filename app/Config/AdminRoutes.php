@@ -1,15 +1,15 @@
 <?php
 
-$routes->group('admin', function ($routes) {
+$routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($routes) {
 
-    $routes->get('/', 'Admin\Login::index');
+    $routes->get('/', 'Login::index');
 
-    $routes->get('login', 'Admin\Login::index');
+    $routes->get('login', 'Login::index');
 
-    $routes->post('login', 'Admin\Login::auth');
+    $routes->post('login', 'Login::auth');
 
-    $routes->get('dashboard', 'Admin\Dashboard::index');
+    $routes->get('dashboard', 'Dashboard::index');
 
-    $routes->get('logout', 'Admin\Login::logout');
+    $routes->get('logout', 'Login::logout');
 
 });
