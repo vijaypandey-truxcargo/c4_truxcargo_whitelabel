@@ -340,7 +340,7 @@ function checkInput(ob) {
                              <?php }?>
                             <li><?= anchor('admin/remittance/cod_lrs','&raquo; Early COD LRs'); ?></li>
                             <?php if(in_array("Add Remittance", $permission)) {?>
-                              <!--<li>  <a href="<?= base_url('admin/remittance/cod_request','');?>"> &raquo; Early COD Request <?php if(session()->get('notify_cod') > 0) { echo '<span class="red" style="background: #fff; font-weight: 700; padding: 3px 6px; border-radius: 12px;margin-left: 12px;"> '.$this->session->userdata('notify_cod').'</span>'; }?></a> </li>-->
+                              <!--<li>  <a href="<?= base_url('admin/remittance/cod_request','');?>"> &raquo; Early COD Request <?php if(session()->get('notify_cod') > 0) { echo '<span class="red" style="background: #fff; font-weight: 700; padding: 3px 6px; border-radius: 12px;margin-left: 12px;"> '.session()->get('notify_cod').'</span>'; }?></a> </li>-->
                               <li><?= anchor('admin/remittance/remittance_update','&raquo; Remittance & Wallet Update'); ?></li>
                               <!--<li><?= anchor('admin/remittance/reconciliation','&raquo; COD Reconciliation'); ?></li>-->
                              <?php }?>

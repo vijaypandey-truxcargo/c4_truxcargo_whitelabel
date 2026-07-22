@@ -28,4 +28,8 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
 
     $routes->get('logout', 'Login::logout');
 
+    $routes->get('dashboard/plans', 'Plans::index');
+
+    $routes->post('dashboard/save_plans', 'Plans::save_plans');
+
 });
