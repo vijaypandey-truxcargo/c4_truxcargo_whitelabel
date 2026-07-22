@@ -22,7 +22,9 @@
 <script src="<?= base_url('backend/js/bootstrap.min.js');?>"></script>
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
  <link rel="stylesheet" href="<?=base_url('assets/css/print.css')?>" media="print">
+
 <script language="javascript">
+    
 function checkInput(ob) {
   var invalidChars = /[^0-9.]/gi;
   if(invalidChars.test(ob.value)) {
