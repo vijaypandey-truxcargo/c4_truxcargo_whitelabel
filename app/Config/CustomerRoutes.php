@@ -6,4 +6,5 @@ $routes->get('login', 'Login::index');
 $routes->post('login/insert', 'Login::insert');
 
 $routes->get('dashboard', 'Dashboard::index');
+$routes->get('plans', 'Plans::index');
 $routes->get('logout', 'Login::logout');
