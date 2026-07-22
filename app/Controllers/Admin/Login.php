@@ -167,7 +167,9 @@ class Login extends BaseController
             );
         }
 
-        $session->destroy();
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            $session->destroy();
+        }
 
         return redirect()->to('/admin/login');
     }

@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\LoginModel;
 use App\Models\SupportModel;
+use CodeIgniter\HTTP\Exceptions\RedirectException;
 
 class Secure extends BaseController
 {
@@ -66,9 +67,11 @@ class Secure extends BaseController
             $user = $this->loginModel->profile($adminId);
 
             if ($user && $user->login_token != session()->get('admin_login_token')) {
-                session()->destroy();
-                redirect()->to('/admin/login')->send();
-                return;
+                session()->remove([
+                    'admin_id', 'admin_login_id', 'admin_login_token',
+                    'admin_user', 'admin_permission', 'admin_login_activity_id',
+                ]);
+                throw new RedirectException(redirect()->to('/admin/login'));
             }
 
             $this->supportModel->update('users', ['last_activity' => date('Y-m-d H:i:s')], $adminId);

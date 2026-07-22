@@ -70,7 +70,10 @@ class Dashboard extends Secure
             $user = $this->loginModel->profile($id); 
               // token mismatch => logout
             if ($user->login_token != session()->get('admin_login_token')) {
-                session()->destroy();
+                session()->remove([
+                    'admin_id', 'admin_login_id', 'admin_login_token',
+                    'admin_user', 'admin_permission', 'admin_login_activity_id',
+                ]);
                 return redirect()->to('/admin/login');
             }
 
