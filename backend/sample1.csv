@@ -1,0 +1,12 @@
+LR No.,Master waybill,Warehouse Name,Description ,Order Id,Service Code,Vendor Code,Total Weight (in KG),Actual Weight,Box Count ,Length,Breadth,Height,Payment Mode,COD AMOUNT,Insurance,e-Way bill,Invoice Amount,Invoice No,Shipper GSTIN,Consignee GSTIN,Company,Consignee Name,Contact,Address,Destination Pincode,Destination City,Destination State
+230594555,"254501237552,658965896589",ARVIND,box,785478545,PAFEX_ROAD_EXPRESS,Delhivery_Lite,20,"15,5","4,6","7,8","9,8","10,9",COD,1000,No,,"1500,1600","inv1,inv2",,,Vashist,minaxi,9350682153,NSP,110034,Delhi,Delhi
+230594583,2545012376540,ARVIND,box,6565656565,PAFEX_ROAD_EXPRESS,Delhivery_Lite,20,20,6,7,8,9,Prepaid,0,Yes,,1600,inv1,,,Vashist,minaxi,9350682153,NSP,110034,Delhi,Delhi
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,, ,,,
