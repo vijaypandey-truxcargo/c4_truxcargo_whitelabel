@@ -132,8 +132,22 @@ class Master extends Secure
             if ($hubCode === '' || ! $company || ($company->status ?? 0) != 1) { $skipped++; continue; }
             $data = ['code' => $hubCode, 'name' => trim((string) ($row['Name'] ?? '')), 'type' => trim((string) ($row['Type'] ?? '')), 'email_id' => trim((string) ($row['Email'] ?? '')), 'company' => $company->id, 'address' => trim((string) ($row['Address'] ?? '')), 'phone' => trim((string) ($row['Phone'] ?? '')), 'status' => strcasecmp(trim((string) ($row['Status'] ?? '')), 'Active') === 0 ? 1 : 0, 'updated_by' => (int) session()->get('admin_login_id')];
             $existing = $this->supportModel->search('hub', ['code' => $hubCode]);
-            if ($existing) { $this->supportModel->update('hub', $data, $existing->id); $updated++; }
-            else { $data['created_at'] = date('Y-m-d H:i:s'); $this->supportModel->insert('hub', $data); $inserted++; }
+            if ($existing) {
+                if ($this->supportModel->update('hub', $data, $existing->id)) {
+                    $this->log('UPDATE WHILE IMPORT', (array) $existing, $data);
+                    $updated++;
+                } else {
+                    $skipped++;
+                }
+            } else {
+                $data['created_at'] = date('Y-m-d H:i:s');
+                if ($this->supportModel->insert('hub', $data)) {
+                    $this->log('INSERT WHILE IMPORT', null, $data);
+                    $inserted++;
+                } else {
+                    $skipped++;
+                }
+            }
         }
         fclose($handle);
         return redirect()->to('/admin/master/hub_masters')->with('error', "Import complete. Inserted: {$inserted}, Updated: {$updated}, Skipped: {$skipped}.")->with('error_class', 'alert-success');
