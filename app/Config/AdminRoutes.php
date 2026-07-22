@@ -54,4 +54,9 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
 
     $routes->post('dashboard/save_plans', 'Plans::save_plans', ['filter' => 'adminAuth']);
 
+    $routes->get('activityLog', 'ActivityLog::index', ['filter' => 'adminAuth']);
+    $routes->get('activityLog/index', 'ActivityLog::index', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'activityLog/user_login_activity', 'ActivityLog::user_login_activity', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'activityLog/software_screen_time_report', 'ActivityLog::software_screen_time_report', ['filter' => 'adminAuth']);
+
 });

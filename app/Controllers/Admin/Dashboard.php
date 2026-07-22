@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Controllers\Admin\Secure;
 use App\Models\LoginModel;
 use App\Models\SupportModel;
+
 class Dashboard extends Secure
 {
     protected $supportModel;
@@ -20,7 +21,7 @@ class Dashboard extends Secure
         $this->loginModel = new LoginModel();
         $this->wconfig = $this->supportModel->find('config', 1);
 
-        if (! session()->get('admin_login_id')) {
+        if (!session()->get('admin_login_id')) {
             return redirect()->to('/admin/login')->send();
         }
 
