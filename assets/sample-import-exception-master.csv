@@ -1,0 +1,4 @@
+Status Code,Status Type,Code Type,Description,Add In NDR,Create Ticket,Ticket Department,Ticket Priority,Status
+102,T,017-S,test,Yes,No,,,Active
+103,S,018-S,test new,No,Yes,BILLING,BILLING ALERT,Active
+104,T,019-S,test new1,Yes,Yes,BILLING,BILLING ALERT,Active

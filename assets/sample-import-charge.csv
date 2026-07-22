@@ -1,0 +1,2 @@
+name,is_gst_applicable,is_fsc_applicable_sales,is_fsc_applicable_purchase,apply_on_order_creation,Status
+TEST,FALSE,TRUE,FALSE,TRUE,Active

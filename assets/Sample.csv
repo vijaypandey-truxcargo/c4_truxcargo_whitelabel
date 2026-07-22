@@ -1,0 +1,5 @@
+STORE_CODE,COMPANY,CONSIGNEE,ADDRESS,PINCODE,CITY,STATE,CONTACT_NO,WEIGHT_KG,ORDER_NO,NO_OF_BOXES,COUNT,WIDTH,LENGTH,HEIGHT,DESCRIPTION,PAYMENT_MODE,COD_AMT,SELLER_GSTIN,CONSIGNEE_GSTIN,INVOICE_NO,INVOICE_AMT,EWAYBILL,Insurance,Profit,HSN
+,cvc,Anil,Sec -33,110034,Rohini,Delhi,1234567890,5,ord1,5,5,32,45,56,product description,Prepaid,0,,,INV1,2000,,Yes,0,9018
+test-store,cvc,Anil,Sec -33,110034,Rohini,Delhi,1234567890,5,"ord2,ord3",8,"5,3","32,23","12,23","23,45",product description,To-Pay,0,,,"INV1,INV2","12,24,545",,No,0,
+test-store,cvc,Anil,Sec -33,110034,Rohini,Delhi,1234567890,5,ord1,5,5,32,45,23,product description,CoD,1000,,,INV1,2000,1.11E+11,,0,
+test-store,cvc,Anil,Sec -33,110034,Rohini,Delhi,1234567890,5,"ord2,ord3",8,"5,3","32,23","12,23","23,45",product description,Franchise-ToPay,0,,,"INV1,INV2","12,24,545",,No,50,
