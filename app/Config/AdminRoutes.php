@@ -28,8 +28,13 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
 
     $routes->get('logout', 'Login::logout');
 
-    $routes->get('dashboard/plans', 'Plans::index');
+    $routes->get('dashboard/plans', 'Plans::index', ['filter' => 'adminAuth']);
 
     $routes->post('dashboard/save_plans', 'Plans::save_plans');
+
+    $routes->get('activityLog', 'ActivityLog::index', ['filter' => 'adminAuth']);
+    $routes->get('activityLog/index', 'ActivityLog::index', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'activityLog/user_login_activity', 'ActivityLog::user_login_activity', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'activityLog/software_screen_time_report', 'ActivityLog::software_screen_time_report', ['filter' => 'adminAuth']);
 
 });

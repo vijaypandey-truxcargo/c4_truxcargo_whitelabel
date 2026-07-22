@@ -1,12 +1,25 @@
 <?php
 
 namespace App\Controllers\Admin;
+use App\Controllers\Admin\Secure;
+use App\Models\LoginModel;
+use App\Models\SupportModel;
 
 class Plans extends Secure
 {
     public function __construct()
     {
         parent::__construct();
+        
+        helper(['url', 'form']);
+        $this->supportModel = new SupportModel();
+        $this->loginModel = new LoginModel();
+        $this->wconfig = $this->supportModel->find('config', 1);
+
+        if (! session()->get('admin_login_id')) {
+            return redirect()->to('/admin/login')->send();
+        }
+
     }
     
     public function index(){ 
@@ -498,7 +511,8 @@ class Plans extends Secure
                                 </div>
                             </div>
                         </button>
-                    </div></div>'; 
+                    </div>
+                </div>'; 
              }   
            }
         }
