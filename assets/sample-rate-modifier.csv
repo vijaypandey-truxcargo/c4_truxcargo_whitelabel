@@ -1,0 +1,3 @@
+charge_name,billing_type,fixed_amount,min_amount,percentage_on_freight,percentage_on_shipment_value,min_chargeable_weight,max_chargeable_weight,min_actual_weight,max_actual_weight,min_volume_weight,max_volume_weight,min_no_of_boxes,max_no_of_boxes,min_per_box_actual_weight,max_per_box_actual_weight,min_dimension,max_dimension,min_dimension_per_pcs,max_dimension_per_pcs,is_origin_oda,is_destination_oda,effective_from,effective_to,rate_mode,customer_code,service_code,vendor_code,status
+ODA TEST,SALE,100,2000,,,,,,,,,,,,,,,TRUE,FALSE,TRUE,,16-12-2025,,RATE PER PCS,,,,ACTIVE
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,
