@@ -19,8 +19,6 @@ class Secure extends BaseController
 
     public function __construct()
     {
-        parent::__construct();
-
         helper(['url', 'form']);
 
         $this->supportModel = new SupportModel();
@@ -43,17 +41,25 @@ class Secure extends BaseController
        
         $adminUserName = $adminUser->userName ?? null;
 
-        $this->permission = $this->normalizePermissions(session()->get('admin_permission'));
+        // Permissions in `control.type` are assigned against the logged-in
+        // admin's userName. Load that role on every request so all pages render
+        // the same sidebar as the dashboard.
+        $permissions = ! empty($adminUserName)
+            ? $this->loginModel->permission($adminUserName)
+            : [];
 
-        if (empty($this->permission) && ! empty($adminUserName)) {
+        // Retain the legacy Admin role as a fallback for installations where a
+        // user-specific control record has not been created.
+        if (empty($permissions)) {
             $permissions = $this->loginModel->permission('admin');
-            if (empty($permissions)) {
-                $permissions = $this->loginModel->permission('Admin');
-            }
-
-            $this->permission = $this->normalizePermissions($permissions);
-            session()->set('admin_permission', $this->permission);
         }
+        if (empty($permissions)) {
+            $permissions = $this->loginModel->permission('Admin');
+        }
+
+        $this->permission = $this->normalizePermissions($permissions);
+        session()->set('admin_permission', $this->permission);
+        $GLOBALS['permission'] = $this->permission;
 
         $adminId = session()->get('admin_login_id');
         if (! empty($adminId)) {

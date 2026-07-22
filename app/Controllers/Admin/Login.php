@@ -47,7 +47,7 @@ class Login extends BaseController
         if (! $this->validate($rules)) {
             return redirect()->back()
                 ->withInput()
-                ->with('validation', $this->validator);
+                ->with('validation_errors', $this->validator->getErrors());
         }
 
         $username       = $this->request->getPost('username');
@@ -143,8 +143,9 @@ class Login extends BaseController
 
     public function logout()
     {
-        $id = session()->get('admin_login_id');
-        $activityId = session()->get('admin_login_activity_id');
+        $session = session();
+        $id = $session->get('admin_login_id');
+        $activityId = $session->get('admin_login_activity_id');
 
         if ($activityId) {
             $this->db->table('user_login_activity')
@@ -157,7 +158,7 @@ class Login extends BaseController
 
         if (! empty($id)) {
             $this->supportModel->update(
-                'registration',
+                'users',
                 [
                     'is_login'    => 0,
                     'login_token' => '',
@@ -166,12 +167,7 @@ class Login extends BaseController
             );
         }
 
-        session()->remove('admin_login_id');
-        session()->remove('admin_id');
-        session()->remove('admin_login_token');
-        session()->remove('admin_user');
-        session()->remove('admin_permission');
-        session()->remove('admin_login_activity_id');
+        $session->destroy();
 
         return redirect()->to('/admin/login');
     }

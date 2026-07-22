@@ -79,7 +79,7 @@ function checkInput(ob) {
                 </a>
 	        <ul class="dropdown-menu">
                     <li class="m_2"><?= anchor('admin/dashboard/changepassword','<i class="fa fa-wrench"></i> Change Password'); ?></li>
-		    <li class="m_2"><?= anchor('admin/login/logout','<i class="fa fa-lock"></i> Logout'); ?></li>
+		    <li class="m_2"><?= anchor('admin/logout','<i class="fa fa-lock"></i> Logout'); ?></li>
 	        </ul>
             </li>
  	    </ul>
@@ -473,7 +473,7 @@ function checkInput(ob) {
                     </li>  
                     
                    <?php }?>
-                    <li><?= anchor('admin/login/logout','<i class="fa fa-lock"></i> &nbsp;Logout'); ?></li>
+                    <li><?= anchor('admin/logout','<i class="fa fa-lock"></i> &nbsp;Logout'); ?></li>
                 </ul>
             </div>
         </div>

@@ -136,8 +136,7 @@
 var csrfName = '<?= csrf_token(); ?>';
 var csrfHash = '<?= csrf_hash(); ?>';
 
-
-    console.log('Screen Time JS Loaded');
+console.log('Screen Time JS Loaded');
 
 var screenTimeId = 0;
 var isUserActive = true;

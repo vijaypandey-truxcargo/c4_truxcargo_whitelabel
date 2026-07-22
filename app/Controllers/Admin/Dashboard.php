@@ -13,6 +13,8 @@ class Dashboard extends Secure
 
     public function __construct()
     {
+        parent::__construct();
+
         helper(['url', 'form']);
         $this->supportModel = new SupportModel();
         $this->loginModel = new LoginModel();
@@ -68,8 +70,8 @@ class Dashboard extends Secure
             $user = $this->loginModel->profile($id); 
               // token mismatch => logout
             if ($user->login_token != session()->get('admin_login_token')) {
-                session()->sess_destroy();
-                redirect('admin/login');
+                session()->destroy();
+                return redirect()->to('/admin/login');
             }
 
             // update activity time
@@ -80,17 +82,26 @@ class Dashboard extends Secure
         $control = $this->supportModel->search_col( 'control', 'permission', array('type' => $type) );
 
         if ($control && !empty($control->permission)) {
-            $GLOBALS['permission'] = explode(',', $control->permission);
+            $permissions = array_values(array_filter(array_map(
+                'trim',
+                explode(',', $control->permission)
+            )));
         } else {
-            $GLOBALS['permission'] = [];
+            $permissions = [];
         }
+
+        // Secure and the admin layout still read this global in a few places.
+        $GLOBALS['permission'] = $permissions;
+        // Keep subsequent pages (for example Configuration) on the same
+        // role-specific permission set used to render the dashboard sidebar.
+        session()->set('admin_permission', $permissions);
 
         $data = [
             'page_title'  => 'Admin Dashboard',
             'body'        => 'bg-light',
             'data'        => $this->supportModel->find_col('config', 'logo', 1),
             'admin_user'  => session()->get('admin_user'),
-            'permission'  => $permission,
+            'permission'  => $permissions,
             'condition'   => $condition,
             'con'         => $con,
             'condition2'  => $condition2,
@@ -155,6 +166,73 @@ class Dashboard extends Secure
         return view('admin/header', $data)
             . view('admin/dashboard', $data)
             . view('admin/footer');
+    }
+
+    public function config()
+    {
+        $config = $this->supportModel->find('config', 1);
+
+        if (! $config) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(
+                'Configuration record was not found.'
+            );
+        }
+
+        $permissions = $this->permission;
+        $data = [
+            'page_title' => 'Configuration',
+            'body'       => 'bg-light',
+            'data'       => $config,
+            'wconfig'    => $config,
+            'admin_user' => session()->get('admin_user'),
+            'permission' => $permissions,
+        ];
+
+        $GLOBALS['permission'] = $permissions;
+
+        return view('admin/header', $data)
+            . view('admin/config_setting', $data)
+            . view('admin/footer');
+    }
+
+    public function save_config(int $id)
+    {
+        if (! $this->supportModel->find('config', $id)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound(
+                'Configuration record was not found.'
+            );
+        }
+
+        $post = $this->request->getPost();
+        unset($post['submit']);
+
+        $logo = $this->request->getFile('logo');
+        if ($logo && $logo->getName() !== '') {
+            $rules = [
+                'logo' => 'uploaded[logo]|max_size[logo,550]|is_image[logo]|ext_in[logo,jpg,jpeg,png]',
+            ];
+
+            if (! $this->validate($rules)) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', implode(' ', $this->validator->getErrors()))
+                    ->with('error_class', 'alert-danger');
+            }
+
+            $fileName = $logo->getRandomName();
+            $logo->move(ROOTPATH . 'uploads/profile', $fileName);
+            $post['logo'] = $fileName;
+        }
+
+        if ($this->supportModel->update('config', $post, $id)) {
+            return redirect()->to('/admin/dashboard/config')
+                ->with('error', 'Successfully Updated.')
+                ->with('error_class', 'alert-success');
+        }
+
+        return redirect()->to('/admin/dashboard/config')
+            ->with('error', 'Failed To Update.')
+            ->with('error_class', 'alert-danger');
     }
 
     public function search()

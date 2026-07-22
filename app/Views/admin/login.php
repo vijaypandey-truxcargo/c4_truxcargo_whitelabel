@@ -42,6 +42,15 @@
                     </div>
                 <?php endif; ?>
 
+                <?php $validationErrors = session()->getFlashdata('validation_errors') ?? []; ?>
+                <?php if (! empty($validationErrors)) : ?>
+                    <div class="alert alert-dismissible alert-danger">
+                        <?php foreach ($validationErrors as $message) : ?>
+                            <div><?= esc($message); ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+
                 <?php if (session()->getFlashdata('login_warning')) : ?>
                     <div class="alert alert-warning">
                         <?= session()->getFlashdata('login_warning'); ?>
@@ -58,9 +67,6 @@
                            value="<?= old('username'); ?>"
                            class="text form-control"
                            placeholder="Username">
-                    <?php if (isset($validation) && $validation->hasError('username')) : ?>
-                        <p class="text-danger"><?= $validation->getError('username'); ?></p>
-                    <?php endif; ?>
                 </div>
 
                 <div class="form-group mb-3">
@@ -68,9 +74,6 @@
                            name="password"
                            class="password form-control"
                            placeholder="Password">
-                    <?php if (isset($validation) && $validation->hasError('password')) : ?>
-                        <p class="text-danger"><?= $validation->getError('password'); ?></p>
-                    <?php endif; ?>
                 </div>
 
                 <input type="hidden"
