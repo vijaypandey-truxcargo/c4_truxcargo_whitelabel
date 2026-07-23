@@ -444,7 +444,7 @@ class Pincode extends Secure
             'page_title' => $config['title'],
             'code' => $rows,
             'count' => $offset,
-            'links' => service('pager')->makeLinks($page, self::PER_PAGE, $total),
+            'links' => service('pager')->makeLinks($page, self::PER_PAGE, $total, 'pincode_full'),
             'selected_pincode' => $selectedPincode,
             'service_map' => $pageKey === 'sales_pincode' ? $this->serviceCodeById() : [],
         ]);
