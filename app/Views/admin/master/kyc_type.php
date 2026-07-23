@@ -17,7 +17,7 @@ function validate(form) {
             <div style="display:flex; align-items:center; gap:10px;">
 
                 <?php if (in_array("Add KYC", $GLOBALS['permission'])): ?>
-                    <?= anchor('admin/KycType/add_kyc', 'New Kyc', [
+                    <?= anchor('admin/kycType/add_kyc', 'New Kyc', [
                         'class' => 'btn btn-danger'
                     ]); ?>
                 <?php endif; ?>
@@ -25,7 +25,7 @@ function validate(form) {
                 <button id="exportSampleBtn" type="button" class="btn btn-success">
                         Download Sample
                     </button>
-                <?= form_open_multipart('admin/KycType/import_kyc', [
+                <?= form_open_multipart('admin/kycType/import_kyc', [
                     'style' => 'display:flex; align-items:center; gap:10px; margin:0;'
                 ]); ?>
 
@@ -47,8 +47,8 @@ function validate(form) {
         <div class="row">
             <div class="col-lg-12">
                 <?php
-                $error = $this->session->flashdata('error');
-                $error_class = $this->session->flashdata('error_class');
+                $error = session()->getFlashdata('error');
+                $error_class = session()->getFlashdata('error_class');
                 if ($error): ?>
                     <div class="alert alert-dismissible <?= $error_class; ?>">
                         <strong><?= $error; ?></strong>
@@ -87,12 +87,12 @@ function validate(form) {
                                 <td width="18%">
                                     <?php if (in_array("Edit KYC", $GLOBALS['permission'])): ?>
 
-                                        <?= anchor("admin/KycType/edit_kyc/{$key->id}", 'Edit', [
+                                        <?= anchor("admin/kycType/edit_kyc/{$key->id}", 'Edit', [
                                             'class' => 'btn btn-primary col-md-4'
                                         ]); ?>
                                         <?php endif; ?>
                                          <?php if (in_array("Delete KYC", $GLOBALS['permission'])): ?>
-                                        <?= form_open('admin/KycType/delete_kyc', [
+                                        <?= form_open('admin/kycType/delete_kyc', [
                                             'onsubmit' => 'return validate(this);'
                                         ]); ?>
                                             <?= form_hidden('id', $key->id); ?>
@@ -121,11 +121,11 @@ function validate(form) {
 
 
 <script>
-document.getElementById('exportSampleBtn').addEventListener('click', function() {
-    window.location.href = "<?= base_url('admin/KycType/export_sample_kyc'); ?>";
+document.getElementById('exportSampleBtn')?.addEventListener('click', function() {
+    window.location.href = "<?= base_url('admin/kycType/export_sample_kyc'); ?>";
 });
 
-document.getElementById('exportBtn').addEventListener('click', function() {
-    window.location.href = "<?= base_url('admin/KycType/export_ticket_kyc'); ?>";
+document.getElementById('exportBtn')?.addEventListener('click', function() {
+    window.location.href = "<?= base_url('admin/kycType/export_ticket_kyc'); ?>";
 });
 </script>

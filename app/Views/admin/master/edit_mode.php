@@ -10,8 +10,8 @@
             <!-- Alert Message -->
             <div class="col-lg-12" style="margin-top:10px;">
                 <?php
-                    $error = $this->session->flashdata('error');
-                    $error_class = $this->session->flashdata('error_class');
+                    $error = session()->getFlashdata('error');
+                    $error_class = session()->getFlashdata('error_class');
                     if ($error):
                 ?>
                     <div class="alert alert-dismissible <?= $error_class; ?>">

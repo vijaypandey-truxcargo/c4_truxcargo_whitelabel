@@ -47,8 +47,8 @@ function validate(form) {
         <div class="row">
             <div class="col-lg-12">
                 <?php
-                $error = $this->session->flashdata('error');
-                $error_class = $this->session->flashdata('error_class');
+                $error = session()->getFlashdata('error');
+                $error_class = session()->getFlashdata('error_class');
                 if ($error): ?>
                     <div class="alert alert-dismissible <?= $error_class; ?>">
                         <strong><?= $error; ?></strong>
@@ -121,11 +121,11 @@ function validate(form) {
 
 
 <script>
-document.getElementById('exportSampleBtn').addEventListener('click', function() {
+document.getElementById('exportSampleBtn')?.addEventListener('click', function() {
     window.location.href = "<?= base_url('admin/state/export_sample_state'); ?>";
 });
 
-document.getElementById('exportBtn').addEventListener('click', function() {
+document.getElementById('exportBtn')?.addEventListener('click', function() {
     window.location.href = "<?= base_url('admin/state/export_ticket_state'); ?>";
 });
 </script>
