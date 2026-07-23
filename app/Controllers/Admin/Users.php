@@ -36,6 +36,8 @@ class Users extends Secure
             return $response;
         }
 
+        $page = (int) ($this->request->getGet('page') ?? $page);
+
         $session = session();
         if ($this->request->getGetPost('clear') || $page === 0) {
             $session->remove(['user_filter_role', 'user_filter_hub', 'user_filter_email', 'user_filter_name']);
@@ -95,7 +97,7 @@ class Users extends Secure
             'page_title' => 'Admin Users',
             'data' => [
                 'code' => $users,
-                'links' => $pager->makeLinks($page, $perPage, $total),
+                'links' => $pager->makeLinks($page, $perPage, $total, 'admin_full'),
                 'selected_role' => $filters['role'],
                 'selected_hub' => $filters['hub'],
                 'selected_email' => $filters['email'],

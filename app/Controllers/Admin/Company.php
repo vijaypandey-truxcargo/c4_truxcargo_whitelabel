@@ -27,6 +27,7 @@ class Company extends Secure
     {
         if ($response = $this->guard('View Company')) return $response;
 
+        $page = (int) ($this->request->getGet('page') ?? $page);
         $page = max(1, $page);
         $perPage = 10;
         $db = db_connect();
@@ -38,7 +39,7 @@ class Company extends Secure
             'page_title' => 'Company',
             'code' => $companies,
             'count' => ($page - 1) * $perPage,
-            'links' => service('pager')->makeLinks($page, $perPage, $total),
+            'links' => service('pager')->makeLinks($page, $perPage, $total, 'admin_full'),
         ]);
     }
 

@@ -24,6 +24,7 @@ class Master extends Secure
     public function hub_masters(int $page = 1)
     {
         if ($response = $this->guard('View Hub')) return $response;
+        $page = (int) ($this->request->getGet('page') ?? $page);
         $session = session();
         if (strtolower($this->request->getMethod()) === 'post') {
             $session->set(['filter_hub_code' => trim((string) $this->request->getPost('code')), 'filter_hub_status' => (string) $this->request->getPost('status')]);
@@ -42,7 +43,7 @@ class Master extends Secure
         $rows = $builder->orderBy('id', 'DESC')->limit($perPage, ($page - 1) * $perPage)->get()->getResult();
         return $this->render('admin/master/hub', [
             'page_title' => 'Hub Master', 'code' => $rows, 'count' => ($page - 1) * $perPage,
-            'links' => service('pager')->makeLinks($page, $perPage, $total), 'hub_list' => $this->supportModel->show('hub', 'ASC'),
+            'links' => service('pager')->makeLinks($page, $perPage, $total, 'admin_full'), 'hub_list' => $this->supportModel->show('hub', 'ASC'),
             'selected_code' => $code, 'selected_status' => $status,
         ]);
     }
