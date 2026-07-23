@@ -48,6 +48,62 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('master/export_sample_hub', 'Master::export_sample_hub', ['filter' => 'adminAuth']);
     $routes->post('master/import_hub', 'Master::import_hub', ['filter' => 'adminAuth']);
 
+    $routes->get('role', 'Role::index', ['filter' => 'adminAuth']);
+    $routes->get('role/index/(:num)', 'Role::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('role/add_role', 'Role::add_role', ['filter' => 'adminAuth']);
+    $routes->post('role/insert_role', 'Role::insert_role', ['filter' => 'adminAuth']);
+    $routes->get('role/edit_role/(:num)', 'Role::edit_role/$1', ['filter' => 'adminAuth']);
+    $routes->post('role/update_role/(:num)', 'Role::update_role/$1', ['filter' => 'adminAuth']);
+    $routes->post('role/delete_role', 'Role::delete_role', ['filter' => 'adminAuth']);
+    $routes->get('role/export_ticket_role', 'Role::export_ticket_role', ['filter' => 'adminAuth']);
+    $routes->get('role/export_sample_role', 'Role::export_sample_role', ['filter' => 'adminAuth']);
+    $routes->post('role/import_role', 'Role::import_role', ['filter' => 'adminAuth']);
+
+    $routes->get('kycType', 'KycType::index', ['filter' => 'adminAuth']);
+    $routes->get('kycType/index/(:num)', 'KycType::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('kycType/add_kyc', 'KycType::add_kyc', ['filter' => 'adminAuth']);
+    $routes->post('kycType/insert_kyc', 'KycType::insert_kyc', ['filter' => 'adminAuth']);
+    $routes->get('kycType/edit_kyc/(:num)', 'KycType::edit_kyc/$1', ['filter' => 'adminAuth']);
+    $routes->post('kycType/update_kyc/(:num)', 'KycType::update_kyc/$1', ['filter' => 'adminAuth']);
+    $routes->post('kycType/delete_kyc', 'KycType::delete_kyc', ['filter' => 'adminAuth']);
+    $routes->get('kycType/export_ticket_kyc', 'KycType::export_ticket_kyc', ['filter' => 'adminAuth']);
+    $routes->get('kycType/export_sample_kyc', 'KycType::export_sample_kyc', ['filter' => 'adminAuth']);
+    $routes->post('kycType/import_kyc', 'KycType::import_kyc', ['filter' => 'adminAuth']);
+
+    $routes->get('state', 'State::index', ['filter' => 'adminAuth']);
+    $routes->get('state/index/(:num)', 'State::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('state/add_state', 'State::add_state', ['filter' => 'adminAuth']);
+    $routes->post('state/insert_state', 'State::insert_state', ['filter' => 'adminAuth']);
+    $routes->get('state/edit_state/(:num)', 'State::edit_state/$1', ['filter' => 'adminAuth']);
+    $routes->post('state/update_state/(:num)', 'State::update_state/$1', ['filter' => 'adminAuth']);
+    $routes->post('state/delete_state', 'State::delete_state', ['filter' => 'adminAuth']);
+    $routes->get('state/export_ticket_state', 'State::export_ticket_state', ['filter' => 'adminAuth']);
+    $routes->get('state/export_sample_state', 'State::export_sample_state', ['filter' => 'adminAuth']);
+    $routes->post('state/import_state', 'State::import_state', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'vendor', 'Vendor::index', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'vendor/index', 'Vendor::index', ['filter' => 'adminAuth']);
+    $routes->get('vendor/index/(:num)', 'Vendor::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('vendor/add_vendor', 'Vendor::add_vendor', ['filter' => 'adminAuth']);
+    $routes->post('vendor/insert_vendor', 'Vendor::insert_vendor', ['filter' => 'adminAuth']);
+    $routes->get('vendor/edit_vendor/(:num)', 'Vendor::edit_vendor/$1', ['filter' => 'adminAuth']);
+    $routes->post('vendor/update_vendor/(:num)', 'Vendor::update_vendor/$1', ['filter' => 'adminAuth']);
+    $routes->post('vendor/delete_vendor', 'Vendor::delete_vendor', ['filter' => 'adminAuth']);
+    $routes->get('vendor/export_all', 'Vendor::export_all', ['filter' => 'adminAuth']);
+    $routes->get('vendor/export_sample_vendor', 'Vendor::export_sample_vendor', ['filter' => 'adminAuth']);
+    $routes->post('vendor/import_vendor', 'Vendor::import_vendor', ['filter' => 'adminAuth']);
+
+    $routes->get('mode', 'Mode::index', ['filter' => 'adminAuth']);
+    $routes->get('mode/index/(:num)', 'Mode::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('mode/add_mode', 'Mode::add_mode', ['filter' => 'adminAuth']);
+    $routes->post('mode/insert_mode', 'Mode::insert_mode', ['filter' => 'adminAuth']);
+    $routes->get('mode/edit_mode/(:num)', 'Mode::edit_mode/$1', ['filter' => 'adminAuth']);
+    $routes->post('mode/update_mode/(:num)', 'Mode::update_mode/$1', ['filter' => 'adminAuth']);
+    $routes->post('mode/delete_mode', 'Mode::delete_mode', ['filter' => 'adminAuth']);
+    $routes->get('mode/export_ticket_mode', 'Mode::export_ticket_mode', ['filter' => 'adminAuth']);
+    $routes->get('mode/export_sample_mode', 'Mode::export_sample_mode', ['filter' => 'adminAuth']);
+    $routes->post('mode/import_mode', 'Mode::import_mode', ['filter' => 'adminAuth']);
+
     $routes->get('logout', 'Login::logout');
 
     $routes->get('dashboard/plans', 'Plans::index', ['filter' => 'adminAuth']);

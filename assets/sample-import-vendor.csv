@@ -1,2 +1,2 @@
 Vendor Name,Vendor Code,Email,Phone,Address,Vendor Type,Company Code,Hub Code,AIR-Divisor,SFC-Divisor,Min-Weight,Max-Weight,Freight,Status
-test,test code,test@gmail.com,9999999999,Delhi,INVENTORY VENDOR,newcodecomopany,codetest,4000,4500,5,6,6,1
+Test Vendor,TEST_VENDOR,test@gmail.com,9999999999,Delhi,INVENTORY VENDOR,PAFEX,DELHI,4000,4500,5,6,6,Active
