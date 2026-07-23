@@ -94,8 +94,8 @@
                 <div class="col-lg-12">
 
                     <?php
-                    $error = $this->session->flashdata('error');
-                    $error_class = $this->session->flashdata('error_class');
+               $error = session()->getFlashdata('error');
+                    $error_class = session()->getFlashdata('error_class');
 
                     if ($error):
                     ?>

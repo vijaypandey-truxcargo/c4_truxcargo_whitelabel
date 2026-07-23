@@ -21,7 +21,7 @@ class ActivityLog extends Secure
                 ->orderBy('id', 'DESC')
                 ->limit($perPage, $offset)
                 ->get()
-                ->getResultArray();
+                ->getResult();
         } catch (\Throwable $exception) {
             $total = 0;
             $logs = [];
@@ -43,7 +43,7 @@ class ActivityLog extends Secure
         $GLOBALS['permission'] = $this->permission;
 
         return view('admin/header', $data)
-            . view('admin/activity_logs', $data)
+            . view('admin/master/activity_logs', $data)
             . view('admin/footer');
     }
 

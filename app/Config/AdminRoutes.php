@@ -48,6 +48,56 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('master/export_sample_hub', 'Master::export_sample_hub', ['filter' => 'adminAuth']);
     $routes->post('master/import_hub', 'Master::import_hub', ['filter' => 'adminAuth']);
 
+    $routes->match(['get', 'post'], 'pincode/criticalLog', 'Pincode::criticalLog', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'pincode/criticalLog/(:num)', 'Pincode::criticalLog/$1', ['filter' => 'adminAuth']);
+    $routes->post('pincode/import_critical_log', 'Pincode::import_critical_log', ['filter' => 'adminAuth']);
+    $routes->post('pincode/delete_critical_log', 'Pincode::delete_critical_log', ['filter' => 'adminAuth']);
+    $routes->get('pincode/export_critical_log', 'Pincode::export_critical_log', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'pincode/bluedart_surface', 'Pincode::bluedart_surface', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'pincode/bluedart_surface/(:num)', 'Pincode::bluedart_surface/$1', ['filter' => 'adminAuth']);
+    $routes->post('pincode/import_bluedart_surface', 'Pincode::import_bluedart_surface', ['filter' => 'adminAuth']);
+    $routes->post('pincode/delete_bluedart_surface', 'Pincode::delete_bluedart_surface', ['filter' => 'adminAuth']);
+    $routes->get('pincode/export_bluedart_surface', 'Pincode::export_bluedart_surface', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'pincode/bluedart_air', 'Pincode::bluedart_air', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'pincode/bluedart_air/(:num)', 'Pincode::bluedart_air/$1', ['filter' => 'adminAuth']);
+    $routes->post('pincode/import_bluedart_air', 'Pincode::import_bluedart_air', ['filter' => 'adminAuth']);
+    $routes->post('pincode/delete_bluedart_air', 'Pincode::delete_bluedart_air', ['filter' => 'adminAuth']);
+    $routes->get('pincode/export_bluedart_air', 'Pincode::export_bluedart_air', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'pincode/bluedart_dp', 'Pincode::bluedart_dp', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'pincode/bluedart_dp/(:num)', 'Pincode::bluedart_dp/$1', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'pincode/bluedart_dP', 'Pincode::bluedart_dp', ['filter' => 'adminAuth']);
+    $routes->post('pincode/import_bluedart_dp', 'Pincode::import_bluedart_dp', ['filter' => 'adminAuth']);
+    $routes->post('pincode/delete_bluedart_dp', 'Pincode::delete_bluedart_dp', ['filter' => 'adminAuth']);
+    $routes->get('pincode/export_bluedart_dp', 'Pincode::export_bluedart_dp', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'pincode/bluedart', 'Pincode::bluedart', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'pincode/bluedart/(:num)', 'Pincode::bluedart/$1', ['filter' => 'adminAuth']);
+    $routes->post('pincode/import_bluedart', 'Pincode::import_bluedart', ['filter' => 'adminAuth']);
+    $routes->post('pincode/surface_bluedart', 'Pincode::surface_bluedart', ['filter' => 'adminAuth']);
+    $routes->post('pincode/delete_bluedart', 'Pincode::delete_bluedart', ['filter' => 'adminAuth']);
+    $routes->get('pincode/export_bluedart', 'Pincode::export_bluedart', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'pincode/delhivery_pincode', 'Pincode::delhivery_pincode', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'pincode/delhivery_pincode/(:num)', 'Pincode::delhivery_pincode/$1', ['filter' => 'adminAuth']);
+    $routes->post('pincode/import_delhivery_pincode', 'Pincode::import_delhivery_pincode', ['filter' => 'adminAuth']);
+    $routes->post('pincode/delete_delhivery_pincode', 'Pincode::delete_delhivery_pincode', ['filter' => 'adminAuth']);
+    $routes->get('pincode/export_delhivery_pincode', 'Pincode::export_delhivery_pincode', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'pincode/xpressbees_pincode', 'Pincode::xpressbees_pincode', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'pincode/xpressbees_pincode/(:num)', 'Pincode::xpressbees_pincode/$1', ['filter' => 'adminAuth']);
+    $routes->post('pincode/import_xpressbees_pincode', 'Pincode::import_xpressbees_pincode', ['filter' => 'adminAuth']);
+    $routes->post('pincode/delete_xpressbees_pincode', 'Pincode::delete_xpressbees_pincode', ['filter' => 'adminAuth']);
+    $routes->get('pincode/export_xpressbees_pincode', 'Pincode::export_xpressbees_pincode', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'pincode/sales_pincode', 'Pincode::sales_pincode', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'pincode/sales_pincode/(:num)', 'Pincode::sales_pincode/$1', ['filter' => 'adminAuth']);
+    $routes->post('pincode/import_sales_pincode', 'Pincode::import_sales_pincode', ['filter' => 'adminAuth']);
+    $routes->post('pincode/delete_sales_pincode', 'Pincode::delete_sales_pincode', ['filter' => 'adminAuth']);
+    $routes->get('pincode/export_sales_pincode', 'Pincode::export_sales_pincode', ['filter' => 'adminAuth']);
+
     $routes->get('logout', 'Login::logout');
 
     $routes->get('dashboard/plans', 'Plans::index', ['filter' => 'adminAuth']);
