@@ -24,11 +24,12 @@ class Role extends Secure
     public function index(int $page = 1)
     {
         if ($response = $this->guard('View Role')) return $response;
+        $page = (int) ($this->request->getGet('page') ?? $page);
         $page = max(1, $page); $perPage = 10; $db = db_connect();
         $total = $db->table('role')->countAllResults();
         $roles = $db->table('role')->orderBy('id', 'DESC')->limit($perPage, ($page - 1) * $perPage)->get()->getResult();
         $roleNames = []; foreach ($this->supportModel->show('role', 'ASC') as $role) $roleNames[$role->id] = $role->name;
-        return $this->render('admin/master/role', ['page_title' => 'Role', 'code' => $roles, 'count' => ($page - 1) * $perPage, 'links' => service('pager')->makeLinks($page, $perPage, $total), 'role_names' => $roleNames]);
+        return $this->render('admin/master/role', ['page_title' => 'Role', 'code' => $roles, 'count' => ($page - 1) * $perPage, 'links' => service('pager')->makeLinks($page, $perPage, $total, 'admin_full'), 'role_names' => $roleNames]);
     }
 
     public function add_role()

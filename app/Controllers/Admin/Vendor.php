@@ -21,6 +21,7 @@ class Vendor extends Secure
     public function index(int $page = 1)
     {
         if ($response = $this->guard('View Vendor')) return $response;
+        $page = (int) ($this->request->getGet('page') ?? $page);
         $session = session();
         if (strtolower($this->request->getMethod()) === 'post') {
             $session->set(['filter_vendor_name' => trim((string) $this->request->getPost('name')), 'filter_vendor_code' => trim((string) $this->request->getPost('code')), 'filter_vendor_status' => (string) $this->request->getPost('status')]); $page = 1;
@@ -30,7 +31,7 @@ class Vendor extends Secure
         $db = db_connect(); $countBuilder = $db->table('vendor'); $filter($countBuilder); $total = $countBuilder->countAllResults();
         $page = max(1, $page); $perPage = 10; $builder = $db->table('vendor'); $filter($builder);
         $rows = $builder->orderBy('id', 'DESC')->limit($perPage, ($page - 1) * $perPage)->get()->getResult();
-        return $this->render('admin/master/vendor', ['page_title' => 'Vendor', 'code' => $rows, 'count' => ($page - 1) * $perPage, 'links' => service('pager')->makeLinks($page, $perPage, $total), 'vendor_list' => $this->supportModel->show('vendor', 'ASC'), 'selected_name' => $name, 'selected_code' => $code, 'selected_status' => $status]);
+        return $this->render('admin/master/vendor', ['page_title' => 'Vendor', 'code' => $rows, 'count' => ($page - 1) * $perPage, 'links' => service('pager')->makeLinks($page, $perPage, $total, 'admin_full'), 'vendor_list' => $this->supportModel->show('vendor', 'ASC'), 'selected_name' => $name, 'selected_code' => $code, 'selected_status' => $status]);
     }
 
     public function add_vendor()
