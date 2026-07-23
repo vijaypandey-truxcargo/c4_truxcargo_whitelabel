@@ -24,10 +24,11 @@ class KycType extends Secure
     public function index(int $page = 1)
     {
         if ($response = $this->guard('View KYC')) return $response;
+        $page = (int) ($this->request->getGet('page') ?? $page);
         $page = max(1, $page); $perPage = 10; $db = db_connect();
         $total = $db->table('kyc_type')->countAllResults();
         $rows = $db->table('kyc_type')->orderBy('id', 'DESC')->limit($perPage, ($page - 1) * $perPage)->get()->getResult();
-        return $this->render('admin/master/kyc_type', ['page_title' => 'KYC Type', 'code' => $rows, 'count' => ($page - 1) * $perPage, 'links' => service('pager')->makeLinks($page, $perPage, $total)]);
+        return $this->render('admin/master/kyc_type', ['page_title' => 'KYC Type', 'code' => $rows, 'count' => ($page - 1) * $perPage, 'links' => service('pager')->makeLinks($page, $perPage, $total, 'admin_full')]);
     }
 
     public function add_kyc()

@@ -21,9 +21,10 @@ class State extends Secure
     public function index(int $page = 1)
     {
         if ($response = $this->guard('View State')) return $response;
+        $page = (int) ($this->request->getGet('page') ?? $page);
         $page = max(1, $page); $perPage = 10; $db = db_connect(); $total = $db->table('state')->countAllResults();
         $rows = $db->table('state')->orderBy('id', 'DESC')->limit($perPage, ($page - 1) * $perPage)->get()->getResult();
-        return $this->render('admin/master/state', ['page_title' => 'State', 'code' => $rows, 'count' => ($page - 1) * $perPage, 'links' => service('pager')->makeLinks($page, $perPage, $total)]);
+        return $this->render('admin/master/state', ['page_title' => 'State', 'code' => $rows, 'count' => ($page - 1) * $perPage, 'links' => service('pager')->makeLinks($page, $perPage, $total, 'admin_full')]);
     }
 
     public function add_state()
