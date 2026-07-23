@@ -36,7 +36,7 @@ class ActivityLog extends Secure
             'admin_user' => session()->get('admin_user'),
             'permission' => $this->permission,
             'count'      => $offset,
-            'links'      => $pager->makeLinks($page, $perPage, $total),
+            'links'      => $pager->makeLinks($page, $perPage, $total, 'admin_full'),
             'logs'       => $logs,
         ];
 
@@ -90,7 +90,7 @@ class ActivityLog extends Secure
             'admin_user'         => session()->get('admin_user'),
             'permission'         => $this->permission,
             'count'              => $offset,
-            'links'              => $pager->makeLinks($page, $perPage, $total),
+            'links'              => $pager->makeLinks($page, $perPage, $total, 'admin_full'),
             'code'               => $code,
             'selected_user_name' => $selectedUserName,
             'selected_user_type' => $selectedUserType,
@@ -157,7 +157,7 @@ class ActivityLog extends Secure
             'admin_user'         => session()->get('admin_user'),
             'permission'         => $this->permission,
             'count'              => $offset,
-            'links'              => $pager->makeLinks($page, $perPage, $total),
+            'links'              => $pager->makeLinks($page, $perPage, $total, 'admin_full'),
             'code'               => $code,
             'selected_user_name' => $selectedUserName,
             'user_map'           => $user_map,
