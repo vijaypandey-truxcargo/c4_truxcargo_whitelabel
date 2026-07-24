@@ -54,8 +54,8 @@ function validate(form) {
             <div class="col-lg-12">
 
                 <?php
-                $error = $this->session->flashdata('error');
-                $error_class = $this->session->flashdata('error_class');
+                $error = session()->getFlashdata('error');
+                $error_class = session()->getFlashdata('error_class');
 
                 if ($error): ?>
 
@@ -276,14 +276,14 @@ function validate(form) {
 
 <script>
 
-document.getElementById('exportSampleBtn').addEventListener('click', function() {
+document.getElementById('exportSampleBtn')?.addEventListener('click', function() {
 
     window.location.href =
         "<?= base_url('admin/service/export_sample_service'); ?>";
 
 });
 
-document.getElementById('exportBtn').addEventListener('click', function() {
+document.getElementById('exportBtn')?.addEventListener('click', function() {
 
     window.location.href =
         "<?= base_url('admin/service/export_ticket_sample'); ?>";

@@ -154,6 +154,66 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('mode/export_sample_mode', 'Mode::export_sample_mode', ['filter' => 'adminAuth']);
     $routes->post('mode/import_mode', 'Mode::import_mode', ['filter' => 'adminAuth']);
 
+    $routes->match(['get', 'post'], 'service', 'Service::index', ['filter' => 'adminAuth']);
+    $routes->get('service/index/(:num)', 'Service::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('service/add_service', 'Service::add_service', ['filter' => 'adminAuth']);
+    $routes->post('service/insert_service', 'Service::insert_service', ['filter' => 'adminAuth']);
+    $routes->get('service/edit_service/(:num)', 'Service::edit_service/$1', ['filter' => 'adminAuth']);
+    $routes->post('service/update_service/(:num)', 'Service::update_service/$1', ['filter' => 'adminAuth']);
+    $routes->post('service/delete_service', 'Service::delete_service', ['filter' => 'adminAuth']);
+    $routes->get('service/export_ticket_sample', 'Service::export_ticket_sample', ['filter' => 'adminAuth']);
+    $routes->get('service/export_sample_service', 'Service::export_sample_service', ['filter' => 'adminAuth']);
+    $routes->post('service/import_service', 'Service::import_service', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'RateModifier', 'RateModifier::index', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'RateModifier/index', 'RateModifier::index', ['filter' => 'adminAuth']);
+    $routes->get('RateModifier/index/(:num)', 'RateModifier::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('RateModifier/add', 'RateModifier::add', ['filter' => 'adminAuth']);
+    $routes->post('RateModifier/insert', 'RateModifier::insert', ['filter' => 'adminAuth']);
+    $routes->get('RateModifier/edit/(:num)', 'RateModifier::edit/$1', ['filter' => 'adminAuth']);
+    $routes->post('RateModifier/update/(:num)', 'RateModifier::update/$1', ['filter' => 'adminAuth']);
+    $routes->post('RateModifier/delete', 'RateModifier::delete', ['filter' => 'adminAuth']);
+    $routes->get('RateModifier/view_ajax/(:num)', 'RateModifier::view_ajax/$1', ['filter' => 'adminAuth']);
+    $routes->post('RateModifier/import', 'RateModifier::import', ['filter' => 'adminAuth']);
+    $routes->get('RateModifier/export_sample_rate', 'RateModifier::export_sample_rate', ['filter' => 'adminAuth']);
+    $routes->get('RateModifier/export_all', 'RateModifier::export_all', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'rateModifier', 'RateModifier::index', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'rateModifier/index', 'RateModifier::index', ['filter' => 'adminAuth']);
+    $routes->get('rateModifier/index/(:num)', 'RateModifier::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('rateModifier/add', 'RateModifier::add', ['filter' => 'adminAuth']);
+    $routes->post('rateModifier/insert', 'RateModifier::insert', ['filter' => 'adminAuth']);
+    $routes->get('rateModifier/edit/(:num)', 'RateModifier::edit/$1', ['filter' => 'adminAuth']);
+    $routes->post('rateModifier/update/(:num)', 'RateModifier::update/$1', ['filter' => 'adminAuth']);
+    $routes->post('rateModifier/delete', 'RateModifier::delete', ['filter' => 'adminAuth']);
+    $routes->get('rateModifier/view_ajax/(:num)', 'RateModifier::view_ajax/$1', ['filter' => 'adminAuth']);
+    $routes->post('rateModifier/import', 'RateModifier::import', ['filter' => 'adminAuth']);
+    $routes->get('rateModifier/export_sample_rate', 'RateModifier::export_sample_rate', ['filter' => 'adminAuth']);
+    $routes->get('rateModifier/export_all', 'RateModifier::export_all', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'CustomerServiceCharge', 'CustomerServiceCharge::index', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'CustomerServiceCharge/index', 'CustomerServiceCharge::index', ['filter' => 'adminAuth']);
+    $routes->get('CustomerServiceCharge/index/(:num)', 'CustomerServiceCharge::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('CustomerServiceCharge/add', 'CustomerServiceCharge::add', ['filter' => 'adminAuth']);
+    $routes->post('CustomerServiceCharge/insert', 'CustomerServiceCharge::insert', ['filter' => 'adminAuth']);
+    $routes->get('CustomerServiceCharge/edit/(:num)', 'CustomerServiceCharge::edit/$1', ['filter' => 'adminAuth']);
+    $routes->post('CustomerServiceCharge/update/(:num)', 'CustomerServiceCharge::update/$1', ['filter' => 'adminAuth']);
+    $routes->post('CustomerServiceCharge/delete', 'CustomerServiceCharge::delete', ['filter' => 'adminAuth']);
+    $routes->post('CustomerServiceCharge/import', 'CustomerServiceCharge::import', ['filter' => 'adminAuth']);
+    $routes->get('CustomerServiceCharge/export_sample', 'CustomerServiceCharge::export_sample', ['filter' => 'adminAuth']);
+    $routes->get('CustomerServiceCharge/export_all', 'CustomerServiceCharge::export_all', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'exceptionMaster', 'ExceptionMaster::index', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'exceptionMaster/index', 'ExceptionMaster::index', ['filter' => 'adminAuth']);
+    $routes->get('exceptionMaster/index/(:num)', 'ExceptionMaster::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('exceptionMaster/add', 'ExceptionMaster::add', ['filter' => 'adminAuth']);
+    $routes->post('exceptionMaster/insert', 'ExceptionMaster::insert', ['filter' => 'adminAuth']);
+    $routes->get('exceptionMaster/edit/(:num)', 'ExceptionMaster::edit/$1', ['filter' => 'adminAuth']);
+    $routes->post('exceptionMaster/update/(:num)', 'ExceptionMaster::update/$1', ['filter' => 'adminAuth']);
+    $routes->post('exceptionMaster/delete', 'ExceptionMaster::delete', ['filter' => 'adminAuth']);
+    $routes->post('exceptionMaster/import', 'ExceptionMaster::import', ['filter' => 'adminAuth']);
+    $routes->get('exceptionMaster/export_sample_exception_master', 'ExceptionMaster::export_sample_exception_master', ['filter' => 'adminAuth']);
+    $routes->get('exceptionMaster/export_all', 'ExceptionMaster::export_all', ['filter' => 'adminAuth']);
+
     $routes->get('logout', 'Login::logout');
 
     $routes->get('dashboard/plans', 'Plans::index', ['filter' => 'adminAuth']);
