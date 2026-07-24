@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use CodeIgniter\Database\BaseBuilder;
 use Config\Database;
 
 class SupportModel
@@ -77,29 +78,32 @@ class SupportModel
 
     public function getRows($table, $params = [])
     {
-        return $this->db->table($table)
-            ->where($params)
-            ->countAllResults();
+        $builder = $this->db->table($table);
+        $this->applyWhere($builder, $params);
+
+        return $builder->countAllResults();
     }
 
     public function distinct_getRows($table, $col, $condition = [])
     {
-        return $this->db->table($table)
+        $builder = $this->db->table($table)
             ->select($col)
-            ->distinct()
-            ->where($condition)
-            ->countAllResults();
+            ->distinct();
+        $this->applyWhere($builder, $condition);
+
+        return $builder->countAllResults();
     }
 
     public function show_limit_distinct($table, $col, $limit, $start, $order, $condition = [])
     {
         $id = explode(',', $col);
 
-        return $this->db->table($table)
+        $builder = $this->db->table($table)
             ->select($col)
-            ->distinct()
-            ->where($condition)
-            ->orderBy(trim($id[0]), $order)
+            ->distinct();
+        $this->applyWhere($builder, $condition);
+
+        return $builder->orderBy(trim($id[0]), $order)
             ->limit($limit, $start)
             ->get()
             ->getResult();
@@ -107,16 +111,18 @@ class SupportModel
 
     public function update_condition($table, $data, $condition = [])
     {
-        return $this->db->table($table)
-            ->where($condition)
-            ->update($data);
+        $builder = $this->db->table($table);
+        $this->applyWhere($builder, $condition);
+
+        return $builder->update($data);
     }
 
     public function show_limit($table, $limit, $start, $order, $condition = [])
     {
-        return $this->db->table($table)
-            ->where($condition)
-            ->orderBy('id', $order)
+        $builder = $this->db->table($table);
+        $this->applyWhere($builder, $condition);
+
+        return $builder->orderBy('id', $order)
             ->limit($limit, $start)
             ->get()
             ->getResult();
@@ -124,10 +130,11 @@ class SupportModel
 
     public function show_limit_col($table, $col, $limit, $start, $order, $condition = [])
     {
-        return $this->db->table($table)
-            ->select($col)
-            ->where($condition)
-            ->orderBy('id', $order)
+        $builder = $this->db->table($table)
+            ->select($col);
+        $this->applyWhere($builder, $condition);
+
+        return $builder->orderBy('id', $order)
             ->limit($limit, $start)
             ->get()
             ->getResult();
@@ -135,10 +142,11 @@ class SupportModel
 
     public function show_limit_col1($table, $col, $limit, $start, $order, $ocol, $condition = [])
     {
-        return $this->db->table($table)
-            ->select($col)
-            ->where($condition)
-            ->orderBy($ocol, $order)
+        $builder = $this->db->table($table)
+            ->select($col);
+        $this->applyWhere($builder, $condition);
+
+        return $builder->orderBy($ocol, $order)
             ->limit($limit, $start)
             ->get()
             ->getResult();
@@ -146,69 +154,76 @@ class SupportModel
 
     public function search($table, $condition = [], $order = 'DESC')
     {
-        return $this->db->table($table)
-            ->where($condition)
-            ->orderBy('id', $order)
+        $builder = $this->db->table($table);
+        $this->applyWhere($builder, $condition);
+
+        return $builder->orderBy('id', $order)
             ->get()
             ->getRow();
     }
 
     public function search_col($table, $col, $condition = [], $order = 'DESC')
     {
-        return $this->db->table($table)
-            ->select($col)
-            ->where($condition)
-            ->orderBy('id', $order)
+        $builder = $this->db->table($table)
+            ->select($col);
+        $this->applyWhere($builder, $condition);
+
+        return $builder->orderBy('id', $order)
             ->get()
             ->getRow();
     }
 
     public function show_condition($table, $order, $condition = [])
     {
-        return $this->db->table($table)
-            ->where($condition)
-            ->orderBy('id', $order)
+        $builder = $this->db->table($table);
+        $this->applyWhere($builder, $condition);
+
+        return $builder->orderBy('id', $order)
             ->get()
             ->getResult();
     }
 
     public function delete_condition($table, $condition = [])
     {
-        return $this->db->table($table)
-            ->where($condition)
-            ->delete();
+        $builder = $this->db->table($table);
+        $this->applyWhere($builder, $condition);
+
+        return $builder->delete();
     }
 
     public function distinct_rows($table, $col, $order, $condition = [])
     {
         $id = explode(',', $col);
 
-        return $this->db->table($table)
+        $builder = $this->db->table($table)
             ->select($col)
-            ->distinct()
-            ->where($condition)
-            ->orderBy(trim($id[0]), $order)
+            ->distinct();
+        $this->applyWhere($builder, $condition);
+
+        return $builder->orderBy(trim($id[0]), $order)
             ->get()
             ->getResult();
     }
 
     public function select_rows($table, $col, $order, $condition = [])
     {
-        return $this->db->table($table)
-            ->select($col)
-            ->where($condition)
-            ->orderBy('id', $order)
+        $builder = $this->db->table($table)
+            ->select($col);
+        $this->applyWhere($builder, $condition);
+
+        return $builder->orderBy('id', $order)
             ->get()
             ->getResult();
     }
 
     public function select_rows_limit($table, $col, $order, $limit, $condition = [])
     {
-        return $this->db->table($table)
+        $builder = $this->db->table($table)
             ->select($col)
-            ->distinct()
-            ->where($condition)
-            ->orderBy('id', $order)
+            ->distinct();
+        $this->applyWhere($builder, $condition);
+
+        return $builder->orderBy('id', $order)
             ->limit($limit)
             ->get()
             ->getResult();
@@ -221,16 +236,56 @@ class SupportModel
         $builder->selectSum($col, 'AMOUNT');
 
         if (!empty($condition)) {
-            if (is_array($condition)) {
-                $builder->where($condition);
-            } else {
-                $builder->where($condition, null, false);
-            }
+            $this->applyWhere($builder, $condition);
         }
 
         $row = $builder->get()->getRow();
 
         return $row ? ($row->AMOUNT ?? 0) : 0;
+    }
+
+    public function wallet($condition = [])
+    {
+        $builder = $this->db->table('wallet')
+            ->selectSum('amount', 'AMOUNT');
+        $this->applyWhere($builder, $condition);
+
+        $row = $builder->get()->getRow();
+
+        return $row ? ($row->AMOUNT ?? 0) : 0;
+    }
+
+    public function getCustomerServiceCharge($limit, $start, $condition = [])
+    {
+        $builder = $this->db->table('customer_service_charge csc')
+            ->select('csc.*, s.name as service_name, v.name as vendor_name')
+            ->join('service s', 's.id = csc.service_id', 'left')
+            ->join('vendor v', 'v.id = csc.vendor_id', 'left');
+        $this->applyWhere($builder, $condition);
+
+        return $builder->orderBy('csc.id', 'DESC')
+            ->limit($limit, $start)
+            ->get()
+            ->getResult();
+    }
+
+    private function applyWhere(BaseBuilder $builder, $condition): void
+    {
+        if ($condition === [] || $condition === null || $condition === '') {
+            return;
+        }
+
+        if (is_string($condition)) {
+            $condition = trim($condition);
+            if ($condition === '' || $condition === '1=1') {
+                return;
+            }
+
+            $builder->where($condition, null, false);
+            return;
+        }
+
+        $builder->where($condition);
     }
 
 }
