@@ -57,6 +57,19 @@ function validatePincodeDelete() {
     vertical-align: top !important;
     white-space: nowrap;
 }
+.pincode-table-scroll table.dataTable thead > tr > th.sorting,
+.pincode-table-scroll table.dataTable thead > tr > th.sorting_asc,
+.pincode-table-scroll table.dataTable thead > tr > th.sorting_desc {
+    padding-right: 34px !important;
+}
+.pincode-table-scroll table.dataTable thead > tr > th.sorting::before,
+.pincode-table-scroll table.dataTable thead > tr > th.sorting_asc::before,
+.pincode-table-scroll table.dataTable thead > tr > th.sorting_desc::before,
+.pincode-table-scroll table.dataTable thead > tr > th.sorting::after,
+.pincode-table-scroll table.dataTable thead > tr > th.sorting_asc::after,
+.pincode-table-scroll table.dataTable thead > tr > th.sorting_desc::after {
+    right: 12px !important;
+}
 @media (max-width: 767px) {
     .pincode-import-row {
         align-items: stretch;
@@ -156,7 +169,7 @@ function validatePincodeDelete() {
 
                 <div class="pincode-sample-shell">
                     <div class="pincode-table-scroll">
-                    <table class="table" id="example">
+                    <table class="table" id="pincode_table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -169,14 +182,6 @@ function validatePincodeDelete() {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (empty($rows)): ?>
-                                <tr class="active">
-                                    <td colspan="<?= esc((string) (count($columns ?? []) + ($canManage ? 2 : 1)), 'attr') ?>" class="text-center">
-                                        No records found.
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
-
                             <?php foreach ($rows as $row): $count++; ?>
                                 <tr class="active">
                                     <td><?= esc((string) $count) ?></td>
@@ -207,3 +212,24 @@ function validatePincodeDelete() {
         </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    if ($.fn.DataTable && ! $.fn.DataTable.isDataTable('#pincode_table')) {
+        $('#pincode_table').DataTable({
+            paging: false,
+            info: false,
+            searching: false,
+            ordering: true,
+            order: [],
+            dom: 't',
+            columnDefs: [
+                { targets: [0<?= $canManage ? ', -1' : '' ?>], orderable: false }
+            ],
+            language: {
+                emptyTable: 'No records found.'
+            }
+        });
+    }
+});
+</script>

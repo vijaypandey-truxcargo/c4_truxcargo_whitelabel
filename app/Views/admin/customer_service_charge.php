@@ -109,49 +109,23 @@
                   <?php foreach($code as $row): $count++; ?>
                   <tr>
                      <?php
-                        $names = [];
-                        $i=1;
-                        
-                        if(!empty($row->customer_id)){
-                        
-                        $ids = explode(',', $row->customer_id);
-                        
-                        foreach($ids as $cid){
-                        $cid = trim($cid);
-                        if(isset($customer_map[$cid])){
-                        $names[]=[
-                        'no'=>$i++,
-                        'name'=>$customer_map[$cid]
-                        ];
-                        }
-                        }
-                        
-                        }
-                        
-                        if(empty($names)){
-                        $names[]=[
-                        'no'=>1,
-                        'name'=>'<b>Default Customer</b>'
-                        ];
-                        }
-                        
-                        $total=count($names);
-                        $showNames=array_slice(array_column($names,'name'),0,4);
-                        
-                        ?>
+                        $names = $row->customer_names ?? [['no' => 1, 'name' => '<b>Default Customer</b>']];
+                        $total = count($names);
+                        $showNames = array_slice(array_column($names, 'name'), 0, 4);
+                     ?>
                      <td><?= $count ?></td>
                      <td>
                         <?= implode(', ',$showNames); ?>
-                        <?php if($total > 1): ?>
+                        <?php if($total>4): ?>
                         <button type="button"
                            class="btn btn-xs btn-info showCustomerBtn"
-                           data-customers="<?= esc(json_encode($names), 'attr'); ?>">
+                           data-customers='<?= json_encode($names); ?>'>
                         Show More
                         </button>
                         <?php endif; ?>
                      </td>
-                     <td><?= esc($service_map[$row->service_id] ?? 'N/A') ?></td>
-                     <td><?= esc($vendor_map[$row->vendor_id] ?? 'N/A') ?></td>
+                     <td><?= $row->service_name ?></td>
+                     <td><?= $row->vendor_name ?></td>
                      <td><?= number_format($row->min_charge,2) ?></td>
                      <td><?= $row->divisor ?></td>
                      <td><?= $row->min_weight ?></td>
@@ -198,13 +172,11 @@
    </div>
 </div>
 <script>
-   const exportSampleBtn = document.getElementById('exportSampleBtn');
-   if (exportSampleBtn) exportSampleBtn.onclick=function(){
+   document.getElementById('exportSampleBtn').onclick=function(){
    window.location.href="<?= base_url('admin/CustomerServiceCharge/export_sample'); ?>";
    };
    
-   const exportBtn = document.getElementById('exportBtn');
-   if (exportBtn) exportBtn.onclick=function(){
+   document.getElementById('exportBtn').onclick=function(){
    window.location.href="<?= base_url('admin/CustomerServiceCharge/export_all'); ?>";
    };
    

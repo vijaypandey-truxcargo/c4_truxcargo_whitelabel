@@ -74,7 +74,7 @@
                             <!-- SERVICE -->
                             <div class="form-group">
                                 <label>Service <span style="color:red">*</span></label>
-                                <select name="service_id" class="form-control" required>
+                                <select name="service" class="form-control" required>
                                     <option value="">Select Anyone</option>
                                     <?php foreach($services as $s): ?>
                                         <option value="<?= $s->id ?>" <?=( $customer_charge->service_id == $s->id) ? 'selected' : '' ?>>
@@ -87,7 +87,7 @@
                             <!-- VENDOR -->
                             <div class="form-group">
                                 <label>Vendor</label>
-                                <select name="vendor_id" class="form-control">
+                                <select name="vendor" class="form-control">
                                     <option value="">Select Anyone</option>
                                     <?php foreach($vendors as $v): ?>
                                         <option value="<?= $v->id ?>" <?=( $customer_charge->vendor_id == $v->id) ? 'selected' : '' ?>>

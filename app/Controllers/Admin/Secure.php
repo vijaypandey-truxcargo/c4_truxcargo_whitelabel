@@ -395,6 +395,28 @@ class Secure extends BaseController
         return is_array($decoded) ? $decoded : [];
     }
 
+    public function curl_post(string $url, string $accessToken = '', string $dataJson = ''): array
+    {
+        $headers = ['Content-Type: application/json'];
+        if ($accessToken !== '') {
+            $headers[] = 'Authorization: ' . $accessToken;
+        }
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataJson);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $decoded = json_decode($response, true);
+        return is_array($decoded) ? $decoded : [];
+    }
+
     protected function jobStatus($jobId, $token)
     {
         return [];

@@ -16,6 +16,10 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
 
     $routes->post('dashboard/save_config/(:num)', 'Dashboard::save_config/$1', ['filter' => 'adminAuth']);
 
+    $routes->get('dashboard/active_user', 'Customer::active_user', ['filter' => 'adminAuth']);
+
+    $routes->get('dashboard/active_user/(:segment)', 'Customer::active_user/$1', ['filter' => 'adminAuth']);
+
     $routes->match(['get', 'post'], 'users', 'Users::index', ['filter' => 'adminAuth']);
     $routes->match(['get', 'post'], 'users/index', 'Users::index', ['filter' => 'adminAuth']);
     $routes->get('users/index/(:num)', 'Users::index/$1', ['filter' => 'adminAuth']);
@@ -219,6 +223,44 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('dashboard/plans', 'Plans::index', ['filter' => 'adminAuth']);
 
     $routes->post('dashboard/save_plans', 'Plans::save_plans', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'customer/all', 'Customer::all', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'customer/all/(:segment)', 'Customer::all/$1', ['filter' => 'adminAuth']);
+    $routes->get('customer/active_user', 'Customer::active_user', ['filter' => 'adminAuth']);
+    $routes->get('customer/active_user/(:segment)', 'Customer::active_user/$1', ['filter' => 'adminAuth']);
+    $routes->get('customer/edit_customer/(:num)', 'Customer::edit_customer/$1', ['filter' => 'adminAuth']);
+    $routes->post('customer/update_customer/(:num)', 'Customer::update_customer/$1', ['filter' => 'adminAuth']);
+    $routes->post('customer/delete', 'Customer::delete', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'customer/bank', 'Customer::bank', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'customer/bank/(:segment)', 'Customer::bank/$1', ['filter' => 'adminAuth']);
+    $routes->get('customer/edit_bank/(:num)', 'Customer::edit_bank/$1', ['filter' => 'adminAuth']);
+    $routes->post('customer/update_bank/(:num)', 'Customer::update_bank/$1', ['filter' => 'adminAuth']);
+    $routes->post('customer/bank_verify', 'Customer::bank_verify', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'customer/wallet', 'Customer::wallet', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'customer/wallet/(:segment)', 'Customer::wallet/$1', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'customer/subscription', 'Customer::subscription', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'customer/subscription/(:segment)', 'Customer::subscription/$1', ['filter' => 'adminAuth']);
+    $routes->get('customer/report', 'Customer::report', ['filter' => 'adminAuth']);
+    $routes->post('customer/report', 'Customer::report', ['filter' => 'adminAuth']);
+    $routes->post('customer/report_wallet', 'Customer::report_wallet', ['filter' => 'adminAuth']);
+    $routes->get('customer/bank_report', 'Customer::bank_report', ['filter' => 'adminAuth']);
+    $routes->post('customer/subscription_report', 'Customer::subscription_report', ['filter' => 'adminAuth']);
+    $routes->get('customer/bulk_client', 'Customer::bulk_client', ['filter' => 'adminAuth']);
+    $routes->post('customer/upload_client', 'Customer::upload_client', ['filter' => 'adminAuth']);
+    $routes->get('customer/create', 'Customer::create', ['filter' => 'adminAuth']);
+    $routes->post('customer/insert', 'Customer::insert', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'CustomerServiceCharge', 'CustomerServiceCharge::index', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'CustomerServiceCharge/index', 'CustomerServiceCharge::index', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'CustomerServiceCharge/index/(:num)', 'CustomerServiceCharge::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('CustomerServiceCharge/add', 'CustomerServiceCharge::add', ['filter' => 'adminAuth']);
+    $routes->post('CustomerServiceCharge/insert', 'CustomerServiceCharge::insert', ['filter' => 'adminAuth']);
+    $routes->get('CustomerServiceCharge/edit/(:num)', 'CustomerServiceCharge::edit/$1', ['filter' => 'adminAuth']);
+    $routes->post('CustomerServiceCharge/update/(:num)', 'CustomerServiceCharge::update/$1', ['filter' => 'adminAuth']);
+    $routes->post('CustomerServiceCharge/delete', 'CustomerServiceCharge::delete', ['filter' => 'adminAuth']);
+    $routes->post('CustomerServiceCharge/import', 'CustomerServiceCharge::import', ['filter' => 'adminAuth']);
+    $routes->get('CustomerServiceCharge/export_sample', 'CustomerServiceCharge::export_sample', ['filter' => 'adminAuth']);
+    $routes->get('CustomerServiceCharge/export_all', 'CustomerServiceCharge::export_all', ['filter' => 'adminAuth']);
 
     $routes->get('activityLog', 'ActivityLog::index', ['filter' => 'adminAuth']);
     $routes->get('activityLog/index', 'ActivityLog::index', ['filter' => 'adminAuth']);
