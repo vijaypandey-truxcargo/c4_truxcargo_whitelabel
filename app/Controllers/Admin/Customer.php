@@ -315,16 +315,25 @@ class Customer extends Secure
             }
         }
 
-        $this->supportModel->update('registration', $data, $id);
+        $updated = $this->supportModel->update('registration', $data, $id);
         $this->supportModel->delete_condition('escalation_matrix', ['customer_id' => $id]);
         $this->saveEscalationRows((int) $id, $post);
+
+        if ($updated) {
+            $this->logActivity('UPDATE', $this->logPayload('registration', $oldData), $this->logPayload('registration', $data, (int) $id));
+        }
 
         return $this->redirectWith("/admin/customer/edit_customer/{$id}", 'Successfully Updated.', 'alert-success');
     }
 
     public function delete()
     {
-        $this->supportModel->delete('registration', $this->request->getPost('id'));
+        $id = (int) $this->request->getPost('id');
+        $old = $this->supportModel->find('registration', $id);
+
+        if ($this->supportModel->delete('registration', $id)) {
+            $this->logActivity('DELETE', $this->logPayload('registration', $old), null);
+        }
 
         return $this->redirectWith('/admin/customer/all/', 'Successfully Delete.', 'alert-success');
     }
@@ -382,6 +391,7 @@ class Customer extends Secure
     {
         $post = $this->request->getPost();
         unset($post['submit'], $post['username']);
+        $old = $this->supportModel->find('bank', (int) $id);
 
         [$cheque, $uploadError] = $this->uploadFile('image', 'uploads/bank', ['jpg', 'jpeg', 'png'], 100);
         if ($uploadError !== null) {
@@ -392,6 +402,7 @@ class Customer extends Secure
         }
 
         if ($this->supportModel->update('bank', $post, $id)) {
+            $this->logActivity('UPDATE', $this->logPayload('bank', $old), $this->logPayload('bank', $post, (int) $id));
             return $this->redirectWith('/admin/customer/bank/all', 'Successfully Updated.', 'alert-success');
         }
 
@@ -636,6 +647,7 @@ class Customer extends Secure
     public function report()
     {
         $rows = $this->supportModel->show('registration', 'DESC');
+        $this->logActivity('EXPORT', null, ['_table' => 'registration', 'rows' => count($rows)]);
         $handle = fopen('php://temp', 'r+');
         fputcsv($handle, ['#', 'Joining Date', 'Username', 'Name', 'Email', 'Phone', 'Customer Code', 'City', 'State', 'Address', 'Pincode', 'User Status']);
 
@@ -664,6 +676,7 @@ class Customer extends Secure
     {
         $table = $this->request->getPost('table') ?: 'registration';
         $rows = $this->supportModel->show_condition($table, 'ASC', '1=1');
+        $this->logActivity('REPORT', null, ['_table' => $table, 'report' => 'customer_wallet', 'rows' => count($rows)]);
 
         $html = '<table class="table table-bordered" id="report"><tr><th> Username</th><th> Name</th><th> Company Name</th><th>Recharge</th><th> Deduction</th><th> Refund</th><th>Balance</th></tr>';
         foreach ($rows as $row) {
@@ -685,6 +698,7 @@ class Customer extends Secure
     public function bank_report()
     {
         $rows = $this->supportModel->show_condition('bank', 'ASC', '1=1');
+        $this->logActivity('REPORT', null, ['_table' => 'bank', 'report' => 'bank', 'rows' => count($rows)]);
         $html = '<table class="table table-bordered" id="report"><tr><th> UserID</th><th> Company</th><th>Bank Holder Name</th><th> Bank Name</th><th> Account No</th><th>IFSC</th></tr>';
         foreach ($rows as $row) {
             $user = $this->supportModel->find_col('registration', 'username,company', $row->login_id);
@@ -707,6 +721,7 @@ class Customer extends Secure
     {
         $condition = $this->request->getPost('condition') ?: '1=1';
         $rows = $this->supportModel->show_condition('buy_plan', 'ASC', $condition);
+        $this->logActivity('REPORT', null, ['_table' => 'buy_plan', 'report' => 'subscription', 'rows' => count($rows)]);
 
         $html = '<table class="table table-bordered" id="report"><tr><th>USERID</th><th>Plan</th><th>Plan Duration</th><th>Plan Amt</th><th>Purchase Date</th><th>Expire Date</th><th>Coupon</th><th>Status</th><th>POC</th></tr>';
         foreach ($rows as $row) {
@@ -824,6 +839,15 @@ class Customer extends Secure
             if (! empty($missingUser)) {
                 $msg .= '<br><b>CS Person Email Not Found:</b> ' . implode(', ', array_unique($missingUser));
             }
+
+            $importedRows = max(0, $rowCount - 1);
+            $this->logActivity('IMPORT', null, [
+                '_table' => 'registration',
+                'total_rows' => $importedRows,
+                'inserted' => $insertCount,
+                'not_inserted' => max(0, $importedRows - $insertCount),
+                'missing_cs_person_email' => array_values(array_unique($missingUser)),
+            ]);
         } else {
             $msg1 = '<p class="red">Error on file upload, please try again.</p>';
         }
@@ -911,7 +935,42 @@ class Customer extends Secure
         $customerId = $this->userModel->insertUser($data);
         $this->saveEscalationRows((int) $customerId, $post);
 
+        if ($customerId) {
+            $this->logActivity('INSERT', null, $this->logPayload('registration', $data, (int) $customerId));
+        }
+
         return $this->redirectWith('/admin/customer/all/all', 'Customer Added Successfully', 'alert-success');
+    }
+
+    private function logActivity(string $action, ?array $old, ?array $new): void
+    {
+        $admin = session()->get('admin_user');
+
+        db_connect()->table('activity_logs')->insert([
+            'user_id' => session()->get('admin_login_id'),
+            'user_name' => $admin->userName ?? '',
+            'module_name' => 'Customer',
+            'action_type' => $action,
+            'old_data' => $old === null ? null : json_encode($old),
+            'new_data' => $new === null ? null : json_encode($new),
+            'ip_address' => $this->request->getIPAddress(),
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+    }
+
+    private function logPayload(string $table, $data, ?int $id = null): ?array
+    {
+        if (! $data) {
+            return null;
+        }
+
+        $payload = is_array($data) ? $data : (array) $data;
+
+        if ($id !== null && ! isset($payload['id'])) {
+            $payload['id'] = $id;
+        }
+
+        return ['_table' => $table] + $payload;
     }
 
     private function render(string $view, array $data = []): string

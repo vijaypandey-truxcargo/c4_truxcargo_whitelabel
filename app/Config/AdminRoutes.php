@@ -218,6 +218,38 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('exceptionMaster/export_sample_exception_master', 'ExceptionMaster::export_sample_exception_master', ['filter' => 'adminAuth']);
     $routes->get('exceptionMaster/export_all', 'ExceptionMaster::export_all', ['filter' => 'adminAuth']);
 
+    $routes->get('support/category', 'Support::category', ['filter' => 'adminAuth']);
+    $routes->get('support/add_category', 'Support::add_category', ['filter' => 'adminAuth']);
+    $routes->post('support/insert_category', 'Support::insert_category', ['filter' => 'adminAuth']);
+    $routes->get('support/edit_category/(:num)', 'Support::edit_category/$1', ['filter' => 'adminAuth']);
+    $routes->post('support/update_category/(:num)', 'Support::update_category/$1', ['filter' => 'adminAuth']);
+    $routes->post('support/delete_category', 'Support::delete_category', ['filter' => 'adminAuth']);
+
+    $routes->get('support/sub_category', 'Support::sub_category', ['filter' => 'adminAuth']);
+    $routes->get('support/add_sub_category', 'Support::add_sub_category', ['filter' => 'adminAuth']);
+    $routes->post('support/insert_sub_category', 'Support::insert_sub_category', ['filter' => 'adminAuth']);
+    $routes->get('support/edit_sub_category/(:num)', 'Support::edit_sub_category/$1', ['filter' => 'adminAuth']);
+    $routes->post('support/update_sub_category/(:num)', 'Support::update_sub_category/$1', ['filter' => 'adminAuth']);
+    $routes->post('support/delete_sub_category', 'Support::delete_sub_category', ['filter' => 'adminAuth']);
+
+    $routes->get('support/terms', 'Support::terms', ['filter' => 'adminAuth']);
+    $routes->get('support/add_terms', 'Support::add_terms', ['filter' => 'adminAuth']);
+    $routes->post('support/insert_terms', 'Support::insert_terms', ['filter' => 'adminAuth']);
+    $routes->get('support/edit_terms/(:num)', 'Support::edit_terms/$1', ['filter' => 'adminAuth']);
+    $routes->post('support/update_terms/(:num)', 'Support::update_terms/$1', ['filter' => 'adminAuth']);
+    $routes->post('support/delete_terms', 'Support::delete_terms', ['filter' => 'adminAuth']);
+
+    $routes->get('support/ticket', 'Support::ticket', ['filter' => 'adminAuth']);
+    $routes->get('support/cancel', 'Support::cancel', ['filter' => 'adminAuth']);
+    $routes->get('support/pending', 'Support::pending', ['filter' => 'adminAuth']);
+    $routes->get('support/closed', 'Support::closed', ['filter' => 'adminAuth']);
+    $routes->post('support/reply', 'Support::reply', ['filter' => 'adminAuth']);
+    $routes->post('support/submit', 'Support::submit', ['filter' => 'adminAuth']);
+    $routes->post('support/reopen', 'Support::reopen', ['filter' => 'adminAuth']);
+    $routes->post('support/submit_reply', 'Support::submit_reply', ['filter' => 'adminAuth']);
+    $routes->get('support/reply_ticket/(:num)', 'Support::reply_ticket/$1', ['filter' => 'adminAuth']);
+    $routes->post('support/markall', 'Support::markall', ['filter' => 'adminAuth']);
+
     $routes->get('logout', 'Login::logout');
 
     $routes->get('dashboard/plans', 'Plans::index', ['filter' => 'adminAuth']);

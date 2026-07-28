@@ -542,6 +542,16 @@ class Pincode extends Secure
             $message .= "\n" . $extra;
         }
 
+        $this->logActivity('IMPORT', null, [
+            '_table' => $config['table'],
+            'page' => $config['title'],
+            'total_rows' => $rowCount,
+            'inserted' => $inserted,
+            'updated' => $updated,
+            'not_inserted' => $skipped,
+            'extra' => $extra,
+        ]);
+
         return redirect()->to($redirect)
             ->with('error', $message)
             ->with('error_class', 'alert-success');
@@ -556,8 +566,11 @@ class Pincode extends Secure
         $config = $this->pageConfig($pageKey);
         $redirect = '/admin/pincode/' . $config['route'];
         $id = (int) $this->request->getPost('id');
+        $old = $id > 0 ? $this->supportModel->find($config['table'], $id) : null;
 
         if ($id > 0 && $this->supportModel->delete($config['table'], $id)) {
+            $this->logActivity('DELETE', $this->logPayload($config['table'], $old), null);
+
             return redirect()->to($redirect)
                 ->with('error', 'Successfully Deleted.')
                 ->with('error_class', 'alert-success');
@@ -582,6 +595,12 @@ class Pincode extends Secure
         fputcsv($stream, array_merge(['#'], array_column($columns, 'header')));
 
         $rows = db_connect()->table($config['table'])->orderBy('id', 'ASC')->get()->getResult();
+        $this->logActivity('EXPORT', null, [
+            '_table' => $config['table'],
+            'page' => $config['title'],
+            'rows' => count($rows),
+        ]);
+
         foreach ($rows as $index => $row) {
             $line = [$index + 1];
             foreach ($columns as $column) {
@@ -812,6 +831,37 @@ class Pincode extends Secure
         }
 
         return self::PAGES[$pageKey];
+    }
+
+    private function logActivity(string $action, ?array $old, ?array $new): void
+    {
+        $admin = session()->get('admin_user');
+
+        db_connect()->table('activity_logs')->insert([
+            'user_id' => session()->get('admin_login_id'),
+            'user_name' => $admin->userName ?? '',
+            'module_name' => 'Pincode',
+            'action_type' => $action,
+            'old_data' => $old === null ? null : json_encode($old),
+            'new_data' => $new === null ? null : json_encode($new),
+            'ip_address' => $this->request->getIPAddress(),
+            'created_at' => date('Y-m-d H:i:s'),
+        ]);
+    }
+
+    private function logPayload(string $table, $data, ?int $id = null): ?array
+    {
+        if (! $data) {
+            return null;
+        }
+
+        $payload = is_array($data) ? $data : (array) $data;
+
+        if ($id !== null && ! isset($payload['id'])) {
+            $payload['id'] = $id;
+        }
+
+        return ['_table' => $table] + $payload;
     }
 
     private function guard(string $permission)
