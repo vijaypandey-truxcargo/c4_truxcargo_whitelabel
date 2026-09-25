@@ -3,6 +3,111 @@
     .circleProgress { width: 100%; margin: auto;} .mb-2{margin-bottom: 20px}
     .circleProgress span{position: absolute; left: 50%; top: 52%;  transform: translate(-50%,-50%);  color: #fff;  font-size: 16px;font-weight: 500;}
     .four-grid{margin-bottom: 28px;} #b2ccontainer svg, #member svg,#b2bcontainer svg{height:300px} .anychart-credits{display: none} .ph4{color: #7e7d7d; font-size: 18px; font-weight: 400;}
+    .dashboard-stats-row,
+    .dashboard-chart-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+    }
+    .dashboard-stats-row:before,
+    .dashboard-stats-row:after,
+    .dashboard-chart-row:before,
+    .dashboard-chart-row:after {
+        display: none;
+    }
+    .dashboard-stats-row > [class*="col-"],
+    .dashboard-chart-row > [class*="col-"] {
+        display: flex;
+    }
+    .dashboard-stats-row .ds {
+        display: flex;
+        width: 100%;
+        text-decoration: none;
+    }
+    .dashboard-stat-card {
+        width: 100%;
+        min-height: 150px;
+        margin-bottom: 2rem;
+    }
+    .dashboard-stat-card .card-body {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-height: 150px;
+        padding: 24px 28px;
+    }
+    .dashboard-stat-card .d-flex {
+        width: 100%;
+        gap: 14px;
+    }
+    .dashboard-stat-card .text-left {
+        min-width: 0;
+    }
+    .dashboard-stat-title {
+        min-height: 42px;
+        line-height: 1.18;
+    }
+    .dashboard-stat-meta,
+    .dashboard-stat-trend {
+        display: block;
+        min-height: 18px;
+        font-size: 13px;
+        line-height: 18px;
+    }
+    .dashboard-chart-card {
+        display: flex;
+        width: 100%;
+        min-height: 540px;
+    }
+    .dashboard-chart-section {
+        background: #f2f4f8;
+        padding: 0 10px;
+    }
+    .dashboard-chart-row {
+        background: #f2f4f8;
+        gap: 24px 28px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .dashboard-chart-row > [class*="col-"] {
+        background: #f2f4f8;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .dashboard-chart-card .card-body {
+        width: 100%;
+    }
+    #container,
+    #b2bcontainer {
+        min-height: 430px;
+    }
+    .dashboard-empty-pie {
+        display: block;
+        width: 48%;
+        max-width: 380px;
+        margin: 25px auto 0;
+    }
+    @media (max-width: 767px) {
+        .dashboard-stat-card,
+        .dashboard-stat-card .card-body {
+            min-height: 135px;
+        }
+        .dashboard-chart-card {
+            min-height: 420px;
+        }
+        #container,
+        #b2bcontainer {
+            min-height: 320px;
+        }
+        .dashboard-empty-pie {
+            width: 70%;
+        }
+    }
+    @media (min-width: 1200px) {
+        .dashboard-chart-row > .col-lg-6 {
+            width: calc(50% - 14px);
+        }
+    }
 </style>
 <script src="https://cdn.anychart.com/js/8.0.1/anychart-core.min.js"></script>
 <script src="https://cdn.anychart.com/js/8.0.1/anychart-pie.min.js"></script>
@@ -271,18 +376,18 @@ $b2b_con = 'status="Complete" and awb_status!="Not Picked"';
             </div>
         </div>    
        
-        <div class="row">
+        <div class="row dashboard-stats-row">
             <?php if (in_array("View Wallet", $permission)) { ?>
             <div class="col-lg-3 col-sm-6"> 
                <a href="<?= base_url('admin/wallet/index/Recharge');?>" class="ds">  
-                <div class="card  bg-dash"> 
+                <div class="card bg-dash dashboard-stat-card"> 
                     <div class="card-body p-4">
-                         <h6 class="mb-1 text-primary fs-18 font-weight-semibold">Wallet Recharge</h6> 
                         <div class="d-flex no-block align-items-center">
                             <div class="text-left"> 
+                                <h6 class="mb-1 text-primary fs-18 font-weight-semibold dashboard-stat-title">Wallet Recharge</h6> 
                                 <p class="mb-1 text-muted fs-16 font-weight-semibold"> <?php if(!empty($wallet)){ echo number_format($wallet/100000,2).' Lakh';} else { echo 0;}?></p>
-                                 <span class="text-success" style="width: 100%;  font-size: 13px;  position: relative; display: block;">Last Month : <?= number_format($wallet_last/100000,2).' L';?></span>
-                                 <span style="font-size: 13px;">
+                                 <span class="text-success dashboard-stat-meta">Last Month : <?= number_format($wallet_last/100000,2).' L';?></span>
+                                 <span class="dashboard-stat-trend">
                                                 <?php  if($wallet>0 && $wallet_last>0){ if($wallet>$wallet_last){?>
                                                 <i class="fa fa-chevron-up"></i> +<?php echo round(($wallet-$wallet_last)*100/$wallet_last,2);?>
                                               <?php } else {?>
@@ -301,11 +406,11 @@ $b2b_con = 'status="Complete" and awb_status!="Not Picked"';
             </div>
             <div class="col-lg-3 col-sm-6"> 
                <a href="<?= base_url('admin/wallet/index/Deduction');?>" class="ds">  
-                <div class="card  bg-dash"> 
+                <div class="card bg-dash dashboard-stat-card"> 
                     <div class="card-body p-4">
                         <div class="d-flex no-block align-items-center">
                             <div class="text-left"> 
-                                <h6 class="mb-1 text-secondary fs-18 font-weight-semibold">Wallet<br> Deduction</h6> 
+                                <h6 class="mb-1 text-secondary fs-18 font-weight-semibold dashboard-stat-title">Wallet<br> Deduction</h6> 
                                 <p class="mb-1 text-muted fs-16 font-weight-semibold"> <?php if(!empty($deduction)){ echo number_format($deduction/100000,2).' Lakh';} else { echo 0;}?></p>
                             </div> 
                             <div class="ml-auto"> 
@@ -318,11 +423,11 @@ $b2b_con = 'status="Complete" and awb_status!="Not Picked"';
             </div>
             <div class="col-lg-3 col-sm-6"> 
                <a href="<?= base_url('admin/wallet/index/Refund');?>" class="ds">  
-                <div class="card  bg-dash"> 
+                <div class="card bg-dash dashboard-stat-card"> 
                     <div class="card-body p-4">
                         <div class="d-flex no-block align-items-center">
                             <div class="text-left"> 
-                                <h6 class="mb-1 text-success fs-18 font-weight-semibold">Wallet<br> Refund</h6> 
+                                <h6 class="mb-1 text-success fs-18 font-weight-semibold dashboard-stat-title">Wallet<br> Refund</h6> 
                                 <p class="mb-1 text-muted fs-16 font-weight-semibold"> <?php if(!empty($refund)){ echo number_format($refund/100000,2).' Lakh';} else { echo 0;}?></p>
                             </div> 
                             <div class="ml-auto"> 
@@ -337,11 +442,11 @@ $b2b_con = 'status="Complete" and awb_status!="Not Picked"';
              <?php } if (in_array("B2B Pickup", $permission) || in_array("B2C Pickup", $permission)) { ?>
                <div class="col-lg-3 col-sm-6"> 
                <a href="<?= base_url('admin/order/pickup/all');?>" class="ds">  
-                <div class="card  bg-dash"> 
+                <div class="card bg-dash dashboard-stat-card"> 
                     <div class="card-body p-4">
                         <div class="d-flex no-block align-items-center">
                             <div class="text-left"> 
-                                <h6 class="mb-1 text-purple fs-18 font-weight-semibold">B2B Pickup Request</h6> 
+                                <h6 class="mb-1 text-purple fs-18 font-weight-semibold dashboard-stat-title">B2B Pickup Request</h6> 
                                 <p class="mb-1 text-muted fs-16 font-weight-semibold"> <?= number_format($count('pickup_request',$condition2));?></p>
                             </div> 
                             <div class="ml-auto"> 
@@ -358,11 +463,11 @@ $b2b_con = 'status="Complete" and awb_status!="Not Picked"';
     <div class="clearfix"></div>
     <!-------------- Payment mode bar chart ------------------> 
          
-       <div class="agileinfo-grap">
-           <div class="row">
+       <div class="agileinfo-grap dashboard-chart-section">
+           <div class="row dashboard-chart-row">
             <?php  if (in_array("B2B Order", $permission)) { ?>
            <div class="col-lg-6 col-xs-12">
-                <div class="card bg-dash"> 
+                <div class="card bg-dash dashboard-chart-card"> 
                    <div class="card-body"><div id="container"></div></div>
                 </div>  
                           <script src="<?= base_url('assets/js/highcharts.js');?>"></script>
@@ -441,7 +546,7 @@ $b2b_con = 'status="Complete" and awb_status!="Not Picked"';
             <?php } if (in_array("B2C Order", $permission)) { ?>
             <?php } if (in_array("B2B Order", $permission)) { ?>
            <div class="col-lg-6 col-xs-12">
-            <div class="card bg-dash"> 
+            <div class="card bg-dash dashboard-chart-card"> 
                 <div class="card-body">
                     <?php
                     $b2b_cod = $count(
@@ -457,7 +562,7 @@ $b2b_con = 'status="Complete" and awb_status!="Not Picked"';
                     if($b2b_cod==0 && $b2b_prepaid==0){ 
                     ?>   
                         <h3 class="text-center mt-1 ph4">Payment Mode Of B2B Shipments</h3>
-                        <img src="<?= base_url()?>assets/images/piechart.jpg" style="width:48%">
+                        <img src="<?= base_url()?>assets/images/piechart.jpg" class="dashboard-empty-pie">
                     <?php } else { ?>
                         
                         <div id="b2bcontainer"></div>

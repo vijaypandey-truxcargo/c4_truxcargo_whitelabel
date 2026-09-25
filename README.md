@@ -28,6 +28,51 @@ to your `app` folder. The affected files can be copied or merged from
 Copy `env` to `.env` and tailor for your app, specifically the baseURL
 and any database settings.
 
+## Run Project Locally
+
+Open a terminal in the project folder:
+
+```bash
+cd /Applications/XAMPP/xamppfiles/htdocs/c4_truxcargo_whitelabel
+```
+
+Install PHP dependencies if `vendor/` is missing:
+
+```bash
+composer install
+```
+
+Make sure XAMPP MySQL is running, then check `.env` database settings:
+
+```text
+app.baseURL = 'http://127.0.0.1:8080/'
+database.default.hostname = 127.0.0.1
+database.default.database = truxcargoco_white
+database.default.username = root
+database.default.DBDriver = MySQLi
+database.default.port = 3307
+```
+
+Start the CodeIgniter development server:
+
+```bash
+php spark serve --host 127.0.0.1 --port 8080
+```
+
+Open the project in browser:
+
+```text
+http://127.0.0.1:8080
+```
+
+If your XAMPP MySQL is running on port `3306`, update this line in `.env`:
+
+```text
+database.default.port = 3306
+```
+
+Press `Control-C` in the terminal to stop the development server.
+
 ## Important Change with index.php
 
 `index.php` is no longer in the root of the project! It has been moved inside the *public* folder,

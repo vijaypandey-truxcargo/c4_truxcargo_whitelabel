@@ -250,6 +250,29 @@ $routes->group('admin', ['namespace' => 'App\Controllers\Admin'], function ($rou
     $routes->get('support/reply_ticket/(:num)', 'Support::reply_ticket/$1', ['filter' => 'adminAuth']);
     $routes->post('support/markall', 'Support::markall', ['filter' => 'adminAuth']);
 
+    $routes->match(['GET', 'POST'], 'partnerb2b', 'Partnerb2b::index', ['filter' => 'adminAuth']);
+    $routes->match(['GET', 'POST'], 'partnerb2b/index', 'Partnerb2b::index', ['filter' => 'adminAuth']);
+    $routes->get('partnerb2b/index/(:num)', 'Partnerb2b::index/$1', ['filter' => 'adminAuth']);
+    $routes->get('partnerb2b/add', 'Partnerb2b::add', ['filter' => 'adminAuth']);
+    $routes->post('partnerb2b/insert', 'Partnerb2b::insert', ['filter' => 'adminAuth']);
+    $routes->get('partnerb2b/edit/(:num)', 'Partnerb2b::edit/$1', ['filter' => 'adminAuth']);
+    $routes->post('partnerb2b/update/(:num)', 'Partnerb2b::update/$1', ['filter' => 'adminAuth']);
+    $routes->post('partnerb2b/delete', 'Partnerb2b::delete', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'ticketingNdr', 'TicketingNdr::index', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'ticketingNdr/index', 'TicketingNdr::index', ['filter' => 'adminAuth']);
+    $routes->post('ticketingNdr/reply', 'TicketingNdr::reply', ['filter' => 'adminAuth']);
+    $routes->post('ticketingNdr/submit', 'TicketingNdr::submit', ['filter' => 'adminAuth']);
+    $routes->post('ticketingNdr/view_comment', 'TicketingNdr::view_comment', ['filter' => 'adminAuth']);
+    $routes->post('ticketingNdr/send_ticket_mail', 'TicketingNdr::send_ticket_mail', ['filter' => 'adminAuth']);
+    $routes->get('ticketingNdr/export_ticket_ndr', 'TicketingNdr::export_ticket_ndr', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'ticketingNdr/(:segment)', 'TicketingNdr::index/$1', ['filter' => 'adminAuth']);
+
+    $routes->match(['get', 'post'], 'TrackingExceptionReport', 'TrackingExceptionReport::index', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'TrackingExceptionReport/index', 'TrackingExceptionReport::index', ['filter' => 'adminAuth']);
+    $routes->post('TrackingExceptionReport/view_awb', 'TrackingExceptionReport::view_awb', ['filter' => 'adminAuth']);
+    $routes->match(['get', 'post'], 'TrackingExceptionReport/(:segment)', 'TrackingExceptionReport::index/$1', ['filter' => 'adminAuth']);
+
     $routes->get('logout', 'Login::logout');
 
     $routes->get('dashboard/plans', 'Plans::index', ['filter' => 'adminAuth']);
